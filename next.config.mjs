@@ -1,11 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
+<<<<<<< HEAD
     ignoreBuildErrors: false,
+=======
+    ignoreBuildErrors: true,
+>>>>>>> 45f4c28 (Initial commit from v0)
   },
   images: {
     unoptimized: true,
   },
+<<<<<<< HEAD
   async headers() {
     return [
       {
@@ -19,6 +24,8 @@ const nextConfig = {
       },
     ]
   },
+=======
+>>>>>>> 45f4c28 (Initial commit from v0)
 }
 
 export default nextConfig

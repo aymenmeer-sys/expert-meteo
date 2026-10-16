@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MétéoExpert
 
 Plateforme météo française responsive, accessible et privacy-first, construite avec Next.js App Router, TypeScript, Tailwind CSS et Lucide.
@@ -59,3 +60,6 @@ Lire [`CONTRIBUTING.md`](CONTRIBUTING.md), respecter Conventional Commits et ouv
 ## Déploiement
 
 Le dépôt cible `github.com/aymenmeer-sys/expert-meteo`. Les déploiements Vercel doivent être configurés depuis le projet Vercel connecté au dépôt ; aucune clé ou URL privée n'est committée dans le repository.
+=======
+# expert-meteo
+>>>>>>> 45f4c28 (Initial commit from v0)
