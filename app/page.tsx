@@ -5,6 +5,7 @@ import { LiveWeather } from '@/components/live-weather'
 import dynamic from 'next/dynamic'
 import { ForecastChart } from '@/components/forecast-chart'
 import { RainRadar } from '@/components/rain-radar'
+import { WeatherModules } from '@/components/weather-modules'
 import useSWR from 'swr'
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json())
@@ -120,6 +121,8 @@ export default function Page() {
             </article>
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">Carte interactive</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
           </section>
+
+          <WeatherModules language={language} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
 
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] py-6 text-[11px] text-slate-600"><span>Données météo © Open-Meteo · Mise à jour toutes les 15 min</span><span className="flex items-center gap-2"><Sunset size={13} /> Coucher du soleil à 18:54</span></footer>
         </section>
