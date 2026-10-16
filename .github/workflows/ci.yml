@@ -4,6 +4,12 @@ on:
   pull_request:
 permissions:
   contents: read
+# CI builds do not contact the database, but Better Auth validates these values
+# while Next.js collects route data during the production build.
+env:
+  BETTER_AUTH_SECRET: ci-only-secret-with-at-least-32-characters
+  DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+  BETTER_AUTH_URL: http://localhost:3000
 jobs:
   quality:
     runs-on: ubuntu-latest
