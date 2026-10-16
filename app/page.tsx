@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { LiveWeather } from '@/components/live-weather'
 import dynamic from 'next/dynamic'
 import { ForecastChart } from '@/components/forecast-chart'
+import { RainRadar } from '@/components/rain-radar'
 import useSWR from 'swr'
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json())
@@ -117,7 +118,7 @@ export default function Page() {
           <section className="mt-8 grid gap-5 xl:grid-cols-[1.1fr_0.9fr]" aria-labelledby="analysis-title">
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">
               <div className="mb-4"><h2 id="analysis-title" className="text-lg font-semibold">Tendance des prochaines heures</h2><p className="mt-1 text-xs text-slate-500">Température et risque de pluie</p></div>
-              <ForecastChart />
+              <ForecastChart hourly={weather?.hourly} /><div className="mt-4"><RainRadar latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} /></div>
             </article>
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">Carte interactive</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
           </section>

@@ -2,14 +2,10 @@
 
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
-const data = [
-  { time: '10h', temperature: 18, rain: 12 }, { time: '12h', temperature: 20, rain: 8 },
-  { time: '14h', temperature: 22, rain: 6 }, { time: '16h', temperature: 21, rain: 14 },
-  { time: '18h', temperature: 19, rain: 24 }, { time: '20h', temperature: 17, rain: 18 },
-  { time: '22h', temperature: 16, rain: 10 },
-]
+type Hourly = { time: string[]; temperature_2m: number[]; precipitation_probability: number[] }
 
-export function ForecastChart() {
+export function ForecastChart({ hourly }: { hourly?: Hourly }) {
+  const data = hourly?.time?.slice(0, 12).map((time, index) => ({ time: new Date(time).toLocaleTimeString('fr-FR', { hour: '2-digit' }), temperature: hourly.temperature_2m[index], rain: hourly.precipitation_probability[index] })) ?? []
   return (
     <div className="h-[250px] w-full" aria-label="Graphique des températures et précipitations">
       <ResponsiveContainer width="100%" height="100%">

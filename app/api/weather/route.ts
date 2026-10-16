@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   const geo = await geoResponse.json()
   const place = geo.results?.[0]
   if (!place) return NextResponse.json({ error: 'Ville introuvable' }, { status: 404 })
-  const response = await fetch(`${forecastUrl}?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,surface_pressure&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=auto&forecast_days=7`, { next: { revalidate: 900 } })
+  const response = await fetch(`${forecastUrl}?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,surface_pressure&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&past_days=7&timezone=auto&forecast_days=10`, { next: { revalidate: 900 } })
   if (!response.ok) return NextResponse.json({ error: 'Service météo indisponible' }, { status: 502 })
   const weather = await response.json()
   return NextResponse.json({ place: { name: place.name, country: place.country, latitude: place.latitude, longitude: place.longitude }, ...weather })
