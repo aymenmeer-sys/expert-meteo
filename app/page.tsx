@@ -1,7 +1,5 @@
 'use client'
 
-'use client'
-
 import { useEffect, useMemo, useState } from 'react'
 import { LiveWeather } from '@/components/live-weather'
 import dynamic from 'next/dynamic'
