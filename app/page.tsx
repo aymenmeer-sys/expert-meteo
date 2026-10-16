@@ -1,7 +1,11 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { LiveWeather } from '@/components/live-weather'
+import dynamic from 'next/dynamic'
+import { ForecastChart } from '@/components/forecast-chart'
+
+const WeatherMap = dynamic(() => import('@/components/weather-map').then((module) => module.WeatherMap), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-2xl bg-white/[0.04]" /> })
 import {
   Bell,
   ChevronDown,
@@ -47,6 +51,9 @@ const days = [
 const cities = ['Paris, France', 'Lyon, France', 'Bordeaux, France', 'Marseille, France']
 
 export default function Page() {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => undefined)
+  }, [])
   const [query, setQuery] = useState('')
   const [city, setCity] = useState('Paris, France')
   const [favorite, setFavorite] = useState(false)
@@ -96,6 +103,14 @@ export default function Page() {
           <section id="forecast" className="mt-8"><div className="mb-4 flex items-center justify-between"><div><h2 className="text-lg font-semibold">Prévisions horaires</h2><p className="mt-1 text-xs text-slate-500">Les prochaines 24 heures</p></div><button className="flex items-center gap-1 text-xs text-cyan-300">Voir le détail <ChevronDown size={14} /></button></div><div className="overflow-x-auto pb-2"><div className="grid min-w-[720px] grid-cols-8 divide-x divide-white/[0.06] rounded-2xl border border-white/[0.07] bg-[#0d2132]">{hourly.map(({ time, temp, rain, icon: Icon }, index) => <div key={time} className={`flex flex-col items-center gap-3 px-3 py-5 ${index === 0 ? 'bg-cyan-300/[0.07]' : ''}`}><span className="text-xs text-slate-500">{time}</span><Icon size={24} className={index > 5 ? 'text-slate-300' : 'text-amber-300'} /><span className="font-semibold">{formatTemp(temp)}</span><span className="text-[11px] text-cyan-300">{rain}%</span></div>)}</div></div></section>
 
           <section className="mt-8 grid gap-5 xl:grid-cols-[1fr_0.8fr]"><div><div className="mb-4 flex items-center justify-between"><h2 className="text-lg font-semibold">Prévisions à 5 jours</h2><button className="text-xs text-cyan-300">14 jours <ChevronDown size={14} className="inline" /></button></div><div className="divide-y divide-white/[0.06] rounded-2xl border border-white/[0.07] bg-[#0d2132] px-5">{days.map(({ day, date, high, low, rain, icon: Icon }) => <div key={day} className="flex items-center justify-between py-4"><div className="flex w-32 items-center gap-3"><Icon size={22} className="text-amber-300" /><div><p className="text-sm font-medium">{day}</p><p className="text-xs text-slate-500">{date}</p></div></div><div className="hidden items-center gap-2 text-xs text-cyan-300 sm:flex"><CloudDrizzle size={14} /> {rain}%</div><div className="flex w-20 items-center justify-end gap-3 text-sm"><strong>{formatTemp(high)}</strong><span className="text-slate-500">{formatTemp(low)}</span></div></div>)}</div></div><div id="maps" className="relative min-h-[250px] overflow-hidden rounded-2xl border border-white/[0.07] bg-[#122d3c] p-5"><div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(rgba(104,190,194,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(104,190,194,.14) 1px, transparent 1px)', backgroundSize: '42px 42px' }} /><div className="relative flex items-start justify-between"><div><p className="text-sm font-semibold">Carte des précipitations</p><p className="mt-1 text-xs text-slate-500">Paris et alentours</p></div><button className="rounded-lg bg-white/10 p-2 text-slate-300" aria-label="Ouvrir la carte"><Compass size={17} /></button></div><div className="relative mt-12 flex items-center justify-center"><div className="absolute h-28 w-28 rounded-full bg-cyan-300/10 blur-xl" /><div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-cyan-300 bg-cyan-300/20"><MapPin size={22} className="text-cyan-200" /></div></div><p className="absolute bottom-5 left-5 text-[11px] text-slate-500">Aucune précipitation prévue dans l&apos;heure</p></div></section>
+          <section className="mt-8 grid gap-5 xl:grid-cols-[1.1fr_0.9fr]" aria-labelledby="analysis-title">
+            <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">
+              <div className="mb-4"><h2 id="analysis-title" className="text-lg font-semibold">Tendance des prochaines heures</h2><p className="mt-1 text-xs text-slate-500">Température et risque de pluie</p></div>
+              <ForecastChart />
+            </article>
+            <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">Carte interactive</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
+          </section>
+
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] py-6 text-[11px] text-slate-600"><span>Données météo © Open-Meteo · Mise à jour toutes les 15 min</span><span className="flex items-center gap-2"><Sunset size={13} /> Coucher du soleil à 18:54</span></footer>
         </section>
       </div>
