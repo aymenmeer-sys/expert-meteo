@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   title: 'MétéoExpert — La météo, simplement précise',
   description: 'Prévisions météo précises, qualité de l’air et alertes pour Paris et toute la France.',
   generator: 'v0.app',
+  keywords: ['météo', 'prévisions météo', 'qualité de l’air', 'radar pluie', 'France'],
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'MétéoExpert — Prévisions météo précises',
+    description: 'Prévisions, radar pluie, qualité de l’air et modules experts.',
+    type: 'website',
+    locale: 'fr_FR',
+  },
   icons: {
     icon: [
       {
@@ -42,6 +50,7 @@ export default function RootLayout({
     <html lang="fr">
       <body className="antialiased">
         {children}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebApplication', name: 'MétéoExpert', applicationCategory: 'WeatherApplication', operatingSystem: 'Web', description: 'Plateforme météo professionnelle avec prévisions, radar et qualité de l’air.' }) }} />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
