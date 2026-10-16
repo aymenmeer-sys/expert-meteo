@@ -1,6 +1,7 @@
 'use client'
 
-<<<<<<< HEAD
+'use client'
+
 import { useEffect, useMemo, useState } from 'react'
 import { LiveWeather } from '@/components/live-weather'
 import dynamic from 'next/dynamic'
@@ -8,12 +9,9 @@ import { ForecastChart } from '@/components/forecast-chart'
 import useSWR from 'swr'
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json())
-type WeatherPayload = { current?: { temperature_2m: number; apparent_temperature: number; relative_humidity_2m: number; wind_speed_10m: number; surface_pressure: number; weather_code: number }; daily?: { temperature_2m_max: number[]; temperature_2m_min: number[]; precipitation_probability_max: number[]; sunrise: string[]; sunset: string[] }; hourly?: { time: string[]; temperature_2m: number[]; precipitation_probability: number[] }; place?: { name: string; country: string; latitude: number; longitude: number }; error?: string }
+type WeatherPayload = { current?: { temperature_2m: number; apparent_temperature: number; relative_humidity_2m: number; wind_speed_10m: number; wind_gusts_10m?: number; surface_pressure: number; visibility?: number; dew_point_2m?: number; cloud_cover?: number; weather_code: number }; daily?: { temperature_2m_max: number[]; temperature_2m_min: number[]; precipitation_probability_max: number[]; sunrise: string[]; sunset: string[] }; hourly?: { time: string[]; temperature_2m: number[]; precipitation_probability: number[] }; place?: { name: string; country: string; latitude: number; longitude: number }; error?: string }
 
 const WeatherMap = dynamic(() => import('@/components/weather-map').then((module) => module.WeatherMap), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-2xl bg-white/[0.04]" /> })
-=======
-import { useMemo, useState } from 'react'
->>>>>>> 45f4c28 (Initial commit from v0)
 import {
   Bell,
   ChevronDown,
@@ -59,12 +57,9 @@ const days = [
 const cities = ['Paris, France', 'Lyon, France', 'Bordeaux, France', 'Marseille, France']
 
 export default function Page() {
-<<<<<<< HEAD
   useEffect(() => {
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => undefined)
   }, [])
-=======
->>>>>>> 45f4c28 (Initial commit from v0)
   const [query, setQuery] = useState('')
   const [city, setCity] = useState('Paris, France')
   const [favorite, setFavorite] = useState(false)
@@ -109,11 +104,7 @@ export default function Page() {
             <div className="flex items-center gap-2 sm:gap-4"><button aria-label="Changer la langue" onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')} className="hidden text-xs font-semibold text-slate-400 sm:block">{language.toUpperCase()}</button><a href="/sign-in" className="hidden text-xs text-cyan-300 sm:block">Connexion</a><button className="hidden items-center gap-2 text-sm text-slate-400 sm:flex" onClick={() => setUnit(unit === 'C' ? 'F' : 'C')}><span className={unit === 'C' ? 'font-bold text-white' : ''}>°C</span><span className="text-slate-600">/</span><span className={unit === 'F' ? 'font-bold text-white' : ''}>°F</span></button><button className="relative rounded-xl border border-white/[0.08] p-2.5 text-slate-400 hover:text-white" aria-label="Notifications"><Bell size={18} /><span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-300" /></button><div className="hidden h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-300 to-blue-500 text-sm font-bold text-[#081522] sm:flex">AM</div></div>
           </header>
 
-<<<<<<< HEAD
-          <div id="dashboard" className="mt-10 flex flex-wrap items-end justify-between gap-4"><div><div className="flex items-center gap-2 text-sm text-slate-400"><MapPin size={15} className="text-cyan-300" />{city}<button onClick={() => setFavorite(!favorite)} aria-label="Ajouter aux favoris" className="ml-1 hover:text-amber-300"> <Heart size={15} fill={favorite ? 'currentColor' : 'none'} className={favorite ? 'text-amber-300' : ''} /></button></div><h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Bonjour, Aymen <span aria-hidden="true">.</span></h1><p className="mt-2 text-sm text-slate-500">Jeudi 16 octobre 2026 <span className="mx-2 text-slate-700">•</span> Dernière mise à jour à 10:42</p><div className="mt-2"><LiveWeather city={city} /></div></div><button className="flex items-center gap-2 rounded-xl border border-white/[0.08] px-3 py-2 text-xs text-slate-400 hover:border-white/20 hover:text-white"><LocateFixed size={14} /> Ma position</button></div>
-=======
-          <div id="dashboard" className="mt-10 flex flex-wrap items-end justify-between gap-4"><div><div className="flex items-center gap-2 text-sm text-slate-400"><MapPin size={15} className="text-cyan-300" />{city}<button onClick={() => setFavorite(!favorite)} aria-label="Ajouter aux favoris" className="ml-1 hover:text-amber-300"> <Heart size={15} fill={favorite ? 'currentColor' : 'none'} className={favorite ? 'text-amber-300' : ''} /></button></div><h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Bonjour, Aymen <span aria-hidden="true">.</span></h1><p className="mt-2 text-sm text-slate-500">Jeudi 16 octobre 2026 <span className="mx-2 text-slate-700">•</span> Dernière mise à jour à 10:42</p></div><button className="flex items-center gap-2 rounded-xl border border-white/[0.08] px-3 py-2 text-xs text-slate-400 hover:border-white/20 hover:text-white"><LocateFixed size={14} /> Ma position</button></div>
->>>>>>> 45f4c28 (Initial commit from v0)
+          <div id="dashboard" className="mt-10 flex flex-wrap items-end justify-between gap-4"><div><div className="flex items-center gap-2 text-sm text-slate-400"><MapPin size={15} className="text-cyan-300" />{city}<button onClick={() => setFavorite(!favorite)} aria-label="Ajouter aux favoris" className="ml-1 hover:text-amber-300"> <Heart size={15} fill={favorite ? 'currentColor' : 'none'} className={favorite ? 'text-amber-300' : ''} /></button></div><h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Bonjour, Aymen <span aria-hidden="true">.</span></h1><p className="mt-2 text-sm text-slate-500">Jeudi 16 octobre 2026 <span className="mx-2 text-slate-700">•</span> Dernière mise à jour à 10:42</p><div className="mt-2"><LiveWeather city={city} /></div></div><button onClick={() => navigator.geolocation?.getCurrentPosition((position) => setCity(`${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}`))} className="flex items-center gap-2 rounded-xl border border-white/[0.08] px-3 py-2 text-xs text-slate-400 hover:border-white/20 hover:text-white"><LocateFixed size={14} /> Ma position</button></div>
 
           <div className="mt-8 grid gap-5 xl:grid-cols-[1.4fr_0.8fr]">
             <article className="relative overflow-hidden rounded-3xl border border-cyan-200/10 bg-gradient-to-br from-[#123650] via-[#0d2a41] to-[#102132] p-6 sm:p-8"><div className="absolute -right-16 -top-24 h-72 w-72 rounded-full bg-cyan-300/10 blur-3xl" /><div className="relative flex flex-wrap items-start justify-between gap-6"><div><p className="text-sm font-medium text-cyan-200">Conditions actuelles</p><div className="mt-5 flex items-center gap-5"><Sun size={72} strokeWidth={1.2} className="text-amber-300" /><div><div className="text-7xl font-light tracking-[-0.08em] text-white">{formatTemp(current?.temperature_2m ?? 18)}<span className="text-3xl text-slate-400">{unit}</span></div><p className="mt-1 text-sm text-slate-300">Partiellement nuageux</p></div></div><p className="mt-7 text-xs text-slate-400">Ressenti {formatTemp(current?.apparent_temperature ?? 18)} <span className="mx-2 text-slate-600">•</span> Max {formatTemp(todayHigh)} / Min {formatTemp(todayLow)}</p></div><div className="grid grid-cols-2 gap-x-7 gap-y-5 text-sm"><Metric icon={<Droplets />} label={language === 'fr' ? 'Humidité' : 'Humidity'} value={`${current?.relative_humidity_2m ?? 64}%`} /><Metric icon={<Wind />} label={language === 'fr' ? 'Vent' : 'Wind'} value={`${Math.round(current?.wind_speed_10m ?? 12)} km/h`} /><Metric icon={<Gauge />} label="Pression" value={`${Math.round(current?.surface_pressure ?? 1018)} hPa`} /><Metric icon={<Sunrise />} label="UV" value="3 Modéré" /></div></div></article>
@@ -123,7 +114,6 @@ export default function Page() {
           <section id="forecast" className="mt-8"><div className="mb-4 flex items-center justify-between"><div><h2 className="text-lg font-semibold">Prévisions horaires</h2><p className="mt-1 text-xs text-slate-500">Les prochaines 24 heures</p></div><button className="flex items-center gap-1 text-xs text-cyan-300">Voir le détail <ChevronDown size={14} /></button></div><div className="overflow-x-auto pb-2"><div className="grid min-w-[720px] grid-cols-8 divide-x divide-white/[0.06] rounded-2xl border border-white/[0.07] bg-[#0d2132]">{hourly.map(({ time, temp, rain, icon: Icon }, index) => <div key={time} className={`flex flex-col items-center gap-3 px-3 py-5 ${index === 0 ? 'bg-cyan-300/[0.07]' : ''}`}><span className="text-xs text-slate-500">{time}</span><Icon size={24} className={index > 5 ? 'text-slate-300' : 'text-amber-300'} /><span className="font-semibold">{formatTemp(temp)}</span><span className="text-[11px] text-cyan-300">{rain}%</span></div>)}</div></div></section>
 
           <section className="mt-8 grid gap-5 xl:grid-cols-[1fr_0.8fr]"><div><div className="mb-4 flex items-center justify-between"><h2 className="text-lg font-semibold">Prévisions à 5 jours</h2><button className="text-xs text-cyan-300">14 jours <ChevronDown size={14} className="inline" /></button></div><div className="divide-y divide-white/[0.06] rounded-2xl border border-white/[0.07] bg-[#0d2132] px-5">{days.map(({ day, date, high, low, rain, icon: Icon }) => <div key={day} className="flex items-center justify-between py-4"><div className="flex w-32 items-center gap-3"><Icon size={22} className="text-amber-300" /><div><p className="text-sm font-medium">{day}</p><p className="text-xs text-slate-500">{date}</p></div></div><div className="hidden items-center gap-2 text-xs text-cyan-300 sm:flex"><CloudDrizzle size={14} /> {rain}%</div><div className="flex w-20 items-center justify-end gap-3 text-sm"><strong>{formatTemp(high)}</strong><span className="text-slate-500">{formatTemp(low)}</span></div></div>)}</div></div><div id="maps" className="relative min-h-[250px] overflow-hidden rounded-2xl border border-white/[0.07] bg-[#122d3c] p-5"><div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(rgba(104,190,194,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(104,190,194,.14) 1px, transparent 1px)', backgroundSize: '42px 42px' }} /><div className="relative flex items-start justify-between"><div><p className="text-sm font-semibold">Carte des précipitations</p><p className="mt-1 text-xs text-slate-500">Paris et alentours</p></div><button className="rounded-lg bg-white/10 p-2 text-slate-300" aria-label="Ouvrir la carte"><Compass size={17} /></button></div><div className="relative mt-12 flex items-center justify-center"><div className="absolute h-28 w-28 rounded-full bg-cyan-300/10 blur-xl" /><div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-cyan-300 bg-cyan-300/20"><MapPin size={22} className="text-cyan-200" /></div></div><p className="absolute bottom-5 left-5 text-[11px] text-slate-500">Aucune précipitation prévue dans l&apos;heure</p></div></section>
-<<<<<<< HEAD
           <section className="mt-8 grid gap-5 xl:grid-cols-[1.1fr_0.9fr]" aria-labelledby="analysis-title">
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">
               <div className="mb-4"><h2 id="analysis-title" className="text-lg font-semibold">Tendance des prochaines heures</h2><p className="mt-1 text-xs text-slate-500">Température et risque de pluie</p></div>
@@ -132,8 +122,6 @@ export default function Page() {
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">Carte interactive</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
           </section>
 
-=======
->>>>>>> 45f4c28 (Initial commit from v0)
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] py-6 text-[11px] text-slate-600"><span>Données météo © Open-Meteo · Mise à jour toutes les 15 min</span><span className="flex items-center gap-2"><Sunset size={13} /> Coucher du soleil à 18:54</span></footer>
         </section>
       </div>
