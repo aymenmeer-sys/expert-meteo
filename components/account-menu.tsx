@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { LogOut, UserCircle } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
@@ -10,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 export const AccountMenu = () => {
-  const router = useRouter()
   const { data: session, isPending } = authClient.useSession()
   const [isSigningOut, setIsSigningOut] = useState(false)
 
@@ -25,8 +23,7 @@ export const AccountMenu = () => {
     try {
       const result = await authClient.signOut()
       if (result.error) throw new Error('Sign-out failed')
-      router.replace('/')
-      router.refresh()
+      window.location.replace('/')
     } catch (error) {
       console.error('[v0] Sign-out failed', error)
       setIsSigningOut(false)
@@ -46,7 +43,13 @@ export const AccountMenu = () => {
         <DropdownMenuItem render={<Link href="/compte" />}><UserCircle data-icon="inline-start" /> Mon compte</DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/compte/abonnement" />}>Mon abonnement</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSignOut} disabled={isSigningOut} className="text-destructive focus:text-destructive"><LogOut data-icon="inline-start" /> {isSigningOut ? 'Déconnexion…' : 'Déconnexion'}</DropdownMenuItem>
+        <DropdownMenuItem
+          render={<button type="button" onClick={handleSignOut} disabled={isSigningOut} />}
+          className="w-full text-destructive focus:text-destructive"
+        >
+          <LogOut data-icon="inline-start" />
+          {isSigningOut ? 'Déconnexion…' : 'Déconnexion'}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

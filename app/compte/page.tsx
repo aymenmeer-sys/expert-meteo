@@ -27,14 +27,13 @@ export default function ComptePage() {
       if (result.error) {
         throw new Error("Sign-out failed");
       }
-      router.replace("/");
-      router.refresh();
+      window.location.replace("/");
     } catch (error) {
       console.error("[v0] Sign-out failed", error);
       setIsSigningOut(false);
       setSignOutError(true);
     }
-  }, [isSigningOut, router]);
+  }, [isSigningOut]);
 
   if (isPending) {
     return (
