@@ -2,9 +2,12 @@ import { betterAuth } from 'better-auth'
 import { pool } from '@/lib/db'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
-const productionOrigin = process.env.BETTER_AUTH_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined)
+const configuredAuthUrl = process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL
+const productionOrigin = configuredAuthUrl || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined)
+const netlifyOrigin = 'https://singular-truffle-7d2d80.netlify.app'
 const originValues = [
-  process.env.BETTER_AUTH_URL!,
+  configuredAuthUrl,
+  netlifyOrigin,
   productionOrigin,
   ...(isDevelopment ? [
     'http://localhost:3000',
@@ -25,7 +28,7 @@ export const auth = betterAuth({
   })()),
   database: pool,
   emailAndPassword: { enabled: true },
-  baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
+  baseURL: configuredAuthUrl || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
   trustedOrigins: originValues,
   ...(process.env.NODE_ENV === 'development' ? {
     advanced: { defaultCookieAttributes: { sameSite: 'none' as const, secure: true } },
