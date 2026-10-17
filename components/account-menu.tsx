@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { LogOut, UserCircle } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -11,15 +12,25 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 export const AccountMenu = () => {
   const router = useRouter()
   const { data: session, isPending } = authClient.useSession()
+  const [isSigningOut, setIsSigningOut] = useState(false)
 
   if (isPending || !session?.user) return <Link href="/sign-in" className="rounded-lg px-3 py-2 text-sm font-medium text-cyan-200 transition-colors hover:bg-white/10 hover:text-white">Connexion</Link>
 
   const initials = session.user.name?.trim().split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase() || session.user.email?.slice(0, 2).toUpperCase() || 'ME'
 
   const handleSignOut = async () => {
-    await authClient.signOut()
-    router.refresh()
-    router.push('/')
+    if (isSigningOut) return
+
+    setIsSigningOut(true)
+    try {
+      const result = await authClient.signOut()
+      if (result.error) throw new Error('Sign-out failed')
+      router.replace('/')
+      router.refresh()
+    } catch (error) {
+      console.error('[v0] Sign-out failed', error)
+      setIsSigningOut(false)
+    }
   }
 
   return (
@@ -35,7 +46,7 @@ export const AccountMenu = () => {
         <DropdownMenuItem render={<Link href="/compte" />}><UserCircle data-icon="inline-start" /> Mon compte</DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/compte/abonnement" />}>Mon abonnement</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive"><LogOut data-icon="inline-start" /> Déconnexion</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignOut} disabled={isSigningOut} className="text-destructive focus:text-destructive"><LogOut data-icon="inline-start" /> {isSigningOut ? 'Déconnexion…' : 'Déconnexion'}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

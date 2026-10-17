@@ -30,6 +30,7 @@ Dernière mise à jour : 2026-10-17
 - Middleware minimal restauré avec `getSessionCookie(request)` et exemption des préchargements Next.js; aucun appel base de données ni validation Better Auth dans Edge.
 - Page admin auth marquée `force-dynamic` pour empêcher un accès Neon/Better Auth pendant le build Vercel.
 - Secret Better Auth sans fallback permissif en production : l’absence de `BETTER_AUTH_SECRET` échoue explicitement au runtime.
+- Logout sécurisé sur `/compte` et dans le menu : état de chargement, double-clic bloqué, gestion d’erreur, `router.replace('/')` et rafraîchissement après suppression de session.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.

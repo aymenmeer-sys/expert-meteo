@@ -1,18 +1,40 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function ComptePage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState(false);
 
   useEffect(() => {
-    if (!isPending && !session) {
-      router.push("/sign-in");
+    if (!isPending && !session && !isSigningOut) {
+      router.replace("/sign-in");
     }
-  }, [session, isPending, router]);
+  }, [session, isPending, isSigningOut, router]);
+
+  const handleSignOut = useCallback(async () => {
+    if (isSigningOut) return;
+
+    setIsSigningOut(true);
+    setSignOutError(false);
+
+    try {
+      const result = await authClient.signOut();
+      if (result.error) {
+        throw new Error("Sign-out failed");
+      }
+      router.replace("/");
+      router.refresh();
+    } catch (error) {
+      console.error("[v0] Sign-out failed", error);
+      setIsSigningOut(false);
+      setSignOutError(true);
+    }
+  }, [isSigningOut, router]);
 
   if (isPending) {
     return (
@@ -35,14 +57,18 @@ export default function ComptePage() {
         <p><strong>Nom :</strong> {session.user.name}</p>
       </div>
 
-      <button 
-        onClick={async () => {
-          await authClient.signOut();
-          router.push("/");
-        }}
-        className="mt-6 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+      {signOutError && (
+        <p className="mt-4 text-sm text-red-300" role="alert">
+          La déconnexion a échoué. Réessayez.
+        </p>
+      )}
+      <button
+        type="button"
+        onClick={handleSignOut}
+        disabled={isSigningOut}
+        className="mt-6 rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Se déconnecter
+        {isSigningOut ? "Déconnexion…" : "Se déconnecter"}
       </button>
     </div>
   );
