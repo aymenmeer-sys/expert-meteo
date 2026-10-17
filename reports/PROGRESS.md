@@ -27,7 +27,8 @@ Dernière mise à jour : 2026-10-17
 - Middleware `middleware.ts` ajouté avec vérification cookie-only via `getSessionCookie(request)` sur `/compte/:path*`; l’autorisation réelle reste portée par Better Auth.
 - `BETTER_AUTH_URL` est incluse explicitement dans `trustedOrigins`.
 - Page `/compte` alignée sur le composant client demandé avec `mounted`, `isPending` et redirection différée.
-- Middleware supprimé définitivement : aucune interception Edge ne s’exécute avant `/compte`. La page client gère elle-même session, chargement et redirection.
+- Middleware minimal restauré avec `getSessionCookie(request)` et exemption des préchargements Next.js; aucun appel base de données ni validation Better Auth dans Edge.
+- `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.
 
