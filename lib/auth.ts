@@ -19,7 +19,10 @@ const originValues = [
 ].filter((value): value is string => Boolean(value))
 
 export const auth = betterAuth({
-  secret: process.env.BETTER_AUTH_SECRET ?? 'build-only-invalid-secret',
+  secret: process.env.BETTER_AUTH_SECRET || (process.env.NEXT_PHASE === 'phase-production-build' ? 'build-only-invalid-secret' : (() => {
+    if (process.env.NODE_ENV === 'production') throw new Error('BETTER_AUTH_SECRET is required in production')
+    return 'local-development-secret-change-me'
+  })()),
   database: pool,
   emailAndPassword: { enabled: true },
   baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
