@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { LiveWeather } from '@/components/live-weather'
 import { NowcastCard } from '@/components/nowcast-card'
+import { CustomizableDashboard } from '@/components/customizable-dashboard'
 import { WeatherBot } from '@/components/weather-bot'
 import dynamic from 'next/dynamic'
 const ForecastChart = dynamic(() => import('@/components/forecast-chart').then((module) => module.ForecastChart), { ssr: false, loading: () => <div className="h-64 animate-pulse rounded-2xl bg-white/[0.04]" /> })
@@ -144,6 +145,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
           </section>
 
           <WeatherBot />
+          <CustomizableDashboard />
 
           <WeatherModules language={language} latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} modelComparisons={comparisonData?.cities} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
 

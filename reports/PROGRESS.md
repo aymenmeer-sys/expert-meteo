@@ -6,7 +6,7 @@ Dernière mise à jour : 2026-10-17
 |---|---|---|
 | 1 — Carte avancée | ✅ Terminé | MapLibre GL, couches vent/radar/température/neige/pression, timeline -3h/+24h, lecture animation |
 | 2 — IA & nowcasting | En cours | API Open-Meteo minutely 15, widget pluie 60 min et MétéoBot AI Gateway ajoutés |
-| 3 — Dashboard personnalisable | À faire | — |
+| 3 — Dashboard personnalisable | ✅ Terminé | @dnd-kit drag/drop, widgets AQI/lune/soleil/pollen/marin, thèmes Clair/Sombre/Auto/Météo, ordre localStorage explicite | Synchronisation Neon utilisateur connecté à étendre en v2.1 |
 | 4 — Communauté & signalements | À faire | — |
 | 5 — API publique & écosystème | À faire | — |
 | 6 — PWA, polish & release | À faire | — |
