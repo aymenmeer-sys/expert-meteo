@@ -1,12 +1,17 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 import { getSessionCookie } from 'better-auth/cookies'
 
-export const middleware = (request: NextRequest) => {
-  if (getSessionCookie(request)) return NextResponse.next()
+export async function middleware(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request)
 
-  return NextResponse.redirect(new URL('/sign-in', request.url))
+  if (!sessionCookie) {
+    return NextResponse.redirect(new URL('/sign-in', request.url))
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/compte/:path*'],
+  matcher: ['/compte/:path*', '/admin/:path*'],
 }
