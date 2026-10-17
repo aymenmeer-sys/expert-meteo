@@ -63,7 +63,7 @@ const translations: Record<Language, Record<string, string>> = {
   de: { overview: 'Übersicht', forecast: 'Vorhersage', maps: 'Wetterkarten', favorites: 'Meine Favoriten', search: 'Stadt suchen...', login: 'Anmelden', current: 'Aktuelle Bedingungen', air: 'Luftqualität', hourly: 'Stündliche Vorhersage', next24: 'Nächste 24 Stunden', detail: 'Details anzeigen', fiveDays: '14-Tage-Prognose', interactive: 'Interaktive Karte', local: 'Position und lokale Bedingungen', goodAir: 'Sehr gute Qualität' },
 }
 
-export default function Page() {
+export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Language }) {
   useEffect(() => {
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => undefined)
   }, [])
@@ -73,7 +73,7 @@ export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [unit, setUnit] = useState<'C' | 'F'>('C')
   const [model, setModel] = useState('best_match')
-  const [language, setLanguage] = useState<Language>('fr')
+  const [language, setLanguage] = useState<Language>(initialLanguage)
   const copy = translations[language]
   const languages: Language[] = ['fr', 'en', 'es', 'de']
   const { data: weather } = useSWR<WeatherPayload>(`/api/weather?city=${encodeURIComponent(city.split(',')[0])}&model=${model}`, fetcher, { refreshInterval: 900000, revalidateOnFocus: true })
