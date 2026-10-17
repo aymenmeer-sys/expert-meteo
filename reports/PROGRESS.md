@@ -7,7 +7,7 @@
 | A3 | Multi-villes / multi-modèles | En cours | Endpoint et sélecteur cyclique Auto/ECMWF/GFS/ICON actifs; comparaison simultanée multi-modèles et tests dédiés restent à finaliser |
 | A4 | Alertes persistantes | En cours | Préférences conservées par cookie pendant un an; synchronisation cloud et notifications push restent à finaliser |
 | A5 | Auth email/password production | En cours | Pages sign-in/sign-up et handler Better Auth validés en preview; test base Neon et session déployée restent à finaliser |
-| A6 | PWA finale | Partiel | Manifest et service worker présents; offline avancé à renforcer |
+| A6 | PWA finale | En cours | Manifest Next complet, icônes et cache shell v2 ajoutés; audit Lighthouse/offline réseau à finaliser |
 | A7 | Tests complets >90% | Partiel | Playwright configuré; couverture unitaires/accessibilité à compléter |
 | B1 | Modules spécialisés réels | Partiel | Modules UI présents; sources marine/agri/montagne/pollen à connecter |
 | B2 | Vigilance Météo-France | À faire | — |
