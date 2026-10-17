@@ -3,7 +3,7 @@
 | ID | Tâche | Statut | Notes |
 |---|---|---|---|
 | A1 | i18n complet FR/EN/ES/DE | En cours | Dictionnaire principal, routes /fr /en /es /de, hreflang et metadata alternates ajoutés; textes secondaires et validation a11y par langue restent à finaliser |
-| A2 | Prévisions complètes | En cours | Horaires désormais alimentés par l’API; vue 14 jours affichée; tendance 30 jours et validation Lighthouse restent à finaliser |
+| A2 | Prévisions complètes | En cours | API Open-Meteo fournit désormais 30 jours; tendance 30 jours affichée et endpoint vérifié; Lighthouse et a11y restent à finaliser |
 | A3 | Multi-villes / multi-modèles | En cours | Endpoint et sélecteur cyclique Auto/ECMWF/GFS/ICON actifs; comparaison simultanée multi-modèles et tests dédiés restent à finaliser |
 | A4 | Alertes persistantes | En cours | Préférences conservées par cookie pendant un an; synchronisation cloud et notifications push restent à finaliser |
 | A5 | Auth email/password production | En cours | Pages sign-in/sign-up et handler Better Auth validés en preview; test base Neon et session déployée restent à finaliser |
