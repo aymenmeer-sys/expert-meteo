@@ -34,4 +34,4 @@ Dernière mise à jour : 2026-10-17
 | 5 — Tests & qualité | En cours | E2E Playwright enrichis avec pages SEO et skip link; checklist QA v1.1.0 ajoutée; typecheck, unit, build et diff validés localement | Matrice CI et couverture globale >90% à confirmer |
 | 6 — Sécurité & conformité | En cours | Headers défense renforcés, CSP report-only documentée, scoping Better Auth et rapport conformité ajoutés | Rate limiting Upstash, SCA/Snyk, DAST et CSP enforced restent à exécuter |
 | 7 — Observabilité & fiabilité | En cours | Vercel Analytics, logger JSON serveur, instrumentation `/api/weather` et page `/status` documentés | Sentry, PostHog avec consentement et alertes de latence restent à intégrer |
-| 8 — i18n & release | À faire | — |
+| 8 — i18n & release | En cours | Alternates `fr/en/es/de/x-default` ajoutés; chantiers design, performance, SEO, a11y, QA, sécurité et observabilité publiés sur `main` | Release GitHub v1.1.0, CI distante et déploiement public restent à exécuter |

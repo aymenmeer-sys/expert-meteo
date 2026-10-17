@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Prévisions météo précises, qualité de l’air et alertes pour Paris et toute la France.',
   generator: 'v0.app',
   keywords: ['météo', 'prévisions météo', 'qualité de l’air', 'radar pluie', 'France'],
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/', languages: { fr: '/fr', en: '/en', es: '/es', de: '/de', 'x-default': '/fr' } },
   openGraph: {
     title: 'MétéoExpert — Prévisions météo précises',
     description: 'Prévisions, radar pluie, qualité de l’air et modules experts.',
