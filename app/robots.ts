@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next'
 
-export default function robots(): MetadataRoute.Robots {
-  const base = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://expert-meteo.vercel.app'
-  return { rules: { userAgent: '*', allow: '/' }, sitemap: `${base}/sitemap.xml` }
-}
+const robots = (): MetadataRoute.Robots => ({ rules: [{ userAgent: '*', allow: '/', disallow: ['/api/', '/sign-in', '/sign-up'] }], sitemap: 'https://expert-meteo.vercel.app/sitemap.xml' })
+
+export default robots

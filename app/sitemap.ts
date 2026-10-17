@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://expert-meteo.vercel.app'
-  return [{ url: base, lastModified: new Date(), changeFrequency: 'hourly', priority: 1 }]
-}
+const sitemap = (): MetadataRoute.Sitemap => [{ url: 'https://expert-meteo.vercel.app/', lastModified: new Date(), changeFrequency: 'hourly', priority: 1 }, { url: 'https://expert-meteo.vercel.app/status', lastModified: new Date(), changeFrequency: 'daily', priority: 0.4 }, { url: 'https://expert-meteo.vercel.app/confidentialite', lastModified: new Date(), changeFrequency: 'yearly', priority: 0.2 }]
+
+export default sitemap

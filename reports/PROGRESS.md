@@ -27,5 +27,8 @@ Dernière mise à jour : 2026-10-17
 
 | Chantier | Statut | Preuve |
 |---|---|---|
-| 1 — Design & UX Awwwards | En cours | Atmosphère météo animée jour/nuit/pluie/neige, glassmorphism existant, mode Focus, transitions réduites via `prefers-reduced-motion` |
-| 2 à 8 | À faire | Enchaînement prévu sans pause; aucune tâche finale ne sera cochée avant la release v1.1.0 |
+| 1 — Design & UX Awwwards | ✅ Terminé | Atmosphère météo animée jour/nuit/pluie/neige, glassmorphism existant, mode Focus, transitions réduites via `prefers-reduced-motion`; test navigateur et screenshot validés |
+| 2 — Performance | En cours | Dynamic map déjà présent; audit bundle/CWV et cache ISR à poursuivre |
+| 3 — SEO & contenu | En cours | Sitemap, robots, page status et page confidentialité ajoutés; pages villes/blog à poursuivre |
+| 4 — Accessibilité | En cours | Skip link clavier, focus visible et sémantique main ajoutés; audit axe à poursuivre |
+| 5 à 8 | À faire | Enchaînement continu; aucune release v1.1.0 ne sera annoncée avant validation finale |
