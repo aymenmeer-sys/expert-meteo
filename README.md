@@ -4,7 +4,7 @@ Plateforme météo française responsive, accessible et privacy-first avec Next.
 
 [![CI](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/ci.yml/badge.svg)](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/ci.yml) [![CodeQL](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/codeql.yml/badge.svg)](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/codeql.yml)
 
-## Fonctionnalités v2.0.0
+## Fonctionnalités v2.0.0 extra
 
 - Carte météo MapLibre avec timeline, couches vent/radar/température/neige/pression.
 - Nowcasting pluie, MétéoBot avec fallback sans IA et dashboard personnalisable.
