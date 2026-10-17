@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logEvent } from '@/lib/observability'
+import { limitRequest } from '@/lib/rate-limit'
 
 const geocodeUrl = 'https://geocoding-api.open-meteo.com/v1/search'
 const forecastUrl = 'https://api.open-meteo.com/v1/forecast'
 
 export async function GET(request: NextRequest) {
+  const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+  const rate = await limitRequest(`weather:${forwardedFor}`)
+  if (!rate.success) return NextResponse.json({ error: 'Trop de requêtes, réessayez dans un instant.' }, { status: 429, headers: { 'Retry-After': String(Math.max(1, Math.ceil(((rate.reset ?? Date.now()) - Date.now()) / 1000))) } })
   const city = request.nextUrl.searchParams.get('city')?.trim() || 'Paris'
   logEvent('weather.request', { city: city.slice(0, 80), method: request.method })
   const modelParam = request.nextUrl.searchParams.get('model') || 'best_match'
