@@ -9,7 +9,7 @@ Dernière mise à jour : 2026-10-17
 | 3 — Dashboard personnalisable | ✅ Terminé | @dnd-kit drag/drop, widgets AQI/lune/soleil/pollen/marin, thèmes Clair/Sombre/Auto/Météo, ordre localStorage explicite | Synchronisation Neon utilisateur connecté à étendre en v2.1 |
 | 4 — Communauté & signalements | En cours | Signalements citoyens persistés avec modération pending, validation Zod, rate limiting et upload Blob privé | Carte communautaire, backoffice de modération et diffusion temps réel à poursuivre |
 | 5 — API publique & écosystème | En cours | Contrat OpenAPI v2 exposé, page développeurs et endpoint `/api/v2/openapi` ajoutés | Clés API, quotas par client et SDK publics à poursuivre |
-| 6 — PWA, polish & release | À faire | — |
+| 6 — PWA, polish & release | En cours | Manifest enrichi avec catégories/raccourcis, service worker v5 et fallback offline conservé | Audit Lighthouse PWA, migration DB community_reports et release GitHub v2.0.0 à finaliser |
 
 ## Historique v1.1.0
 

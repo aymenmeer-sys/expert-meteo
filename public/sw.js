@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoexpert-v4'
+const CACHE_NAME = 'meteoexpert-v5'
 const SHELL_CACHE = ['/', '/offline.html', '/manifest.webmanifest', '/icon-light-32x32.png', '/icon-dark-32x32.png', '/apple-icon.png']
 
 self.addEventListener('install', (event) => {
