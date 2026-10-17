@@ -77,6 +77,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const copy = translations[language]
   const languages: Language[] = ['fr', 'en', 'es', 'de']
+  const { data: vigilance } = useSWR<{ available: boolean; data?: { global?: { max_color_id?: number } } }>('/api/vigilance', fetcher, { refreshInterval: 900000 })
   const { data: weather } = useSWR<WeatherPayload>(`/api/weather?city=${encodeURIComponent(city.split(',')[0])}&model=${model}`, fetcher, { refreshInterval: 900000, revalidateOnFocus: true })
   const { data: comparisonData } = useSWR<{ cities: ModelComparison[] }>('/api/weather/compare?cities=Paris,Lyon,Bordeaux', fetcher, { refreshInterval: 900000 })
   const filteredCities = useMemo(() => cities.filter((item) => item.toLowerCase().includes(query.toLowerCase())), [query])
@@ -87,7 +88,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
   const liveHourly = useMemo(() => (weather?.hourly?.time ?? []).slice(0, 8).map((time, index) => ({ time: index === 0 ? 'Maint.' : new Date(time).getHours() + 'h', temp: weather?.hourly?.temperature_2m?.[index] ?? 18, rain: weather?.hourly?.precipitation_probability?.[index] ?? 0, icon: CloudSun })), [weather])
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#081522] text-slate-100">
+    <main className="min-h-screen overflow-hidden bg-[#081522] text-slate-100">{vigilance?.available && <div className="border-b border-amber-300/20 bg-amber-300/10 px-6 py-2 text-center text-xs text-amber-100">Vigilance Météo-France disponible · consultez les niveaux départementaux</div>}
       <div className="mx-auto flex min-h-screen max-w-[1500px]">
         <aside className="hidden w-[250px] shrink-0 flex-col border-r border-white/[0.07] bg-[#0a1b2a] px-5 py-7 lg:flex">
           <div className="flex items-center gap-3 px-2">
