@@ -1,9 +1,9 @@
 # Changelog
 
-## [Unreleased]
-- Ajout du dashboard MétéoExpert responsive.
-- Ajout de la recherche de villes, favoris et unités Celsius/Fahrenheit.
-- Ajout des rapports, ADR, threat model et workflow CI.
+## [1.1.0] — En préparation
+- Atmosphère météo adaptative et mode Focus.
+- Pages publiques status/confidentialité, sitemap et robots.
+- Navigation clavier et rapports d’audit structurés.
 
 ## [1.0.0]
-- Première release planifiée.
+- Release initiale publiée sur GitHub.
