@@ -1,4 +1,18 @@
-# MétéoExpert — Progression v1.1.0
+# MétéoExpert — Progression v2.0.0
+
+Dernière mise à jour : 2026-10-17
+
+| Chantier | Statut | Preuve / reste |
+|---|---|---|
+| 1 — Carte avancée | ✅ Terminé | MapLibre GL, couches vent/radar/température/neige/pression, timeline -3h/+24h, lecture animation |
+| 2 — IA & nowcasting | En cours | API Open-Meteo minutely 15, widget pluie 60 min et MétéoBot AI Gateway ajoutés |
+| 3 — Dashboard personnalisable | À faire | — |
+| 4 — Communauté & signalements | À faire | — |
+| 5 — API publique & écosystème | À faire | — |
+| 6 — PWA, polish & release | À faire | — |
+
+## Historique v1.1.0
+
 
 Dernière mise à jour : 2026-10-17
 
