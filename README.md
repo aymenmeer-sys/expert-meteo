@@ -1,65 +1,33 @@
-<<<<<<< HEAD
 # MétéoExpert
 
-Plateforme météo française responsive, accessible et privacy-first, construite avec Next.js App Router, TypeScript, Tailwind CSS et Lucide.
+Plateforme météo française responsive, accessible et privacy-first avec Next.js App Router, TypeScript, Tailwind CSS et données météo réelles.
 
-[![CI](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/ci.yml/badge.svg)](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/ci.yml)
+[![CI](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/ci.yml/badge.svg)](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/ci.yml) [![CodeQL](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/codeql.yml/badge.svg)](https://github.com/aymenmeer-sys/expert-meteo/actions/workflows/codeql.yml)
 
-## État du projet
+## Fonctionnalités v1.1.0
 
-Version actuelle : `0.1.0` — fondations UI et gouvernance livrées. La feuille de route complète est documentée dans [`reports/sprint-01-09-roadmap.md`](reports/sprint-01-09-roadmap.md). Les intégrations météo, cartes, alertes, authentification et stockage cloud restent des étapes identifiées, pas des fonctionnalités simulées comme disponibles.
+- Dashboard météo, qualité de l’air, prévisions et modules spécialisés.
+- Atmosphère adaptative, mode Focus, responsive mobile-first et reduced motion.
+- Pages SEO locales, actualités, sitemap, robots et metadata multilingues FR/EN/ES/DE.
+- PWA offline, favoris cloud, rate limiting Upstash et headers de sécurité CSP.
+- Observabilité JSON serveur, page `/status`, runbooks et workflow OWASP ZAP passif.
+- Tests TypeScript, Vitest et Playwright.
 
-## Fonctionnalités actuelles
-
-- Dashboard météo responsive avec conditions, qualité de l'air, horaires et prévisions.
-- Recherche de villes avec autocomplétion locale et sélection clavier.
-- Conversion °C/°F et favoris d'interface.
-- Navigation responsive, repères d'accessibilité et thème sombre lisible.
-- Documentation d'architecture, API, sécurité, onboarding et runbooks.
-
-## Démarrage rapide
+## Démarrage
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Ouvrir `http://localhost:3000`. Vérifications disponibles :
-
-```bash
-pnpm typecheck
-pnpm build
-```
-
-## Structure
-
-- `app/` : routes App Router et styles globaux.
-- `components/` : composants UI réutilisables.
-- `docs/` : architecture, API, ADR, sécurité et runbooks.
-- `reports/` : rapports de sprint et synthèses.
-- `.github/` : CI, CodeQL, modèles de contribution et issues.
-
-## Qualité et sécurité
-
-Les contrôles CI vérifient l'installation reproductible, le typecheck et le build. Les secrets restent dans les variables d'environnement ; consultez [`.env.example`](.env.example). La threat model STRIDE et le plan d'incident sont dans [`docs/security/threat-model.md`](docs/security/threat-model.md) et [`docs/runbooks/api-outage.md`](docs/runbooks/api-outage.md).
-
-## Contribution
-
-Lire [`CONTRIBUTING.md`](CONTRIBUTING.md), respecter Conventional Commits et ouvrir une PR avec le modèle fourni. Le comportement attendu est décrit dans [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Les vulnérabilités doivent être signalées selon [`SECURITY.md`](SECURITY.md).
+Vérifications : `pnpm typecheck`, `pnpm test:unit`, `pnpm build`.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
-- [Contrat API](docs/api.md)
-- [Onboarding](docs/onboarding.md)
-- [Glossaire](docs/glossary.md)
-- [Conformité légale](docs/legal.md)
-- [Changelog](CHANGELOG.md)
-- [Licence MIT](LICENSE)
+- [`docs/architecture.md`](docs/architecture.md)
+- [`docs/api.md`](docs/api.md)
+- [`docs/runbooks/security.md`](docs/runbooks/security.md)
+- [`reports/PROGRESS.md`](reports/PROGRESS.md)
+- [`CHANGELOG.md`](CHANGELOG.md)
 
-## Déploiement
-
-Le dépôt cible `github.com/aymenmeer-sys/expert-meteo`. Les déploiements Vercel doivent être configurés depuis le projet Vercel connecté au dépôt ; aucune clé ou URL privée n'est committée dans le repository.
-=======
-# expert-meteo
->>>>>>> 45f4c28 (Initial commit from v0)
+Les secrets et intégrations sont configurés via les variables d’environnement du projet. Les DSN Sentry/PostHog ne sont pas inventés : leur activation est prévue après connexion des intégrations correspondantes.

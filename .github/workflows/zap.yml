@@ -1,0 +1,20 @@
+name: OWASP ZAP passive scan
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  zap:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Passive baseline scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ vars.PRODUCTION_URL || 'https://expert-meteo.vercel.app' }}
+          fail_action: false
+          cmd_options: '-m 5'

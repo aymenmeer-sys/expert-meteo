@@ -1,5 +1,9 @@
 pmOnFail: ignore
 
+overrides:
+  proxy-addr: '>=2.0.8'
+  serialize-javascript: '>=7.0.3'
+
 minimumReleaseAgeExclude:
   - '@next/*'
   - next
