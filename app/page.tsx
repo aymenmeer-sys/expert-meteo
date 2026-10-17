@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { LiveWeather } from '@/components/live-weather'
 import dynamic from 'next/dynamic'
-import { ForecastChart } from '@/components/forecast-chart'
-import { RainRadar } from '@/components/rain-radar'
+const ForecastChart = dynamic(() => import('@/components/forecast-chart').then((module) => module.ForecastChart), { ssr: false, loading: () => <div className="h-64 animate-pulse rounded-2xl bg-white/[0.04]" /> })
+const RainRadar = dynamic(() => import('@/components/rain-radar').then((module) => module.RainRadar), { ssr: false, loading: () => <div className="h-64 animate-pulse rounded-2xl bg-white/[0.04]" /> })
 import { WeatherModules } from '@/components/weather-modules'
 import { WeatherAtmosphere } from '@/components/weather-atmosphere'
 import useSWR from 'swr'
