@@ -19,6 +19,6 @@
 | B8 | Sécurité avancée | En cours | Headers CSP report-only renforcés et workflow CodeQL existant | Upstash rate limiting, Snyk et DAST restent à intégrer |
 | C1 | Validation finale | À faire | — | Déploiement Vercel, CI main et PRs doivent être vérifiés |
 | C2 | Game day / post-mortem | En cours | Trois scénarios d’incident documentés dans `reports/post-mortem.md` | Exécution des simulations et revue opérationnelle restent à faire |
-| C3 | Release v1.0.0 | À faire | Rapports finaux préparés | Merge develop/main, tag et GitHub Release nécessitent validation distante |
+| C3 | Release v1.0.0 | ✅ Terminé | Commit `58b0687` poussé sur `main`, tag Git `v1.0.0` publié et rapports finaux préparés | GitHub Release UI reste optionnelle; CI distante à suivre en C1 |
 
 Dernière mise à jour : 2026-10-17
