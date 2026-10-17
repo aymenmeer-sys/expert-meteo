@@ -32,4 +32,6 @@ Dernière mise à jour : 2026-10-17
 | 3 — SEO & contenu | En cours | Sitemap, robots, status, confidentialité, actualités et pages locales `/villes/[city]` ajoutés avec metadata/canonicals | Données éditoriales CMS et validation Search Console restent à poursuivre |
 | 4 — Accessibilité | En cours | Skip link clavier, focus visible, rôles `status`/`aria-live`, sémantique main et réduction de mouvement; rapport RGAA ajouté | Axe/Lighthouse accessibility et audit contraste restent à exécuter |
 | 5 — Tests & qualité | En cours | E2E Playwright enrichis avec pages SEO et skip link; checklist QA v1.1.0 ajoutée; typecheck, unit, build et diff validés localement | Matrice CI et couverture globale >90% à confirmer |
-| 6 à 8 | À faire | Enchaînement continu; aucune release v1.1.0 ne sera annoncée avant validation finale |
+| 6 — Sécurité & conformité | En cours | Headers défense renforcés, CSP report-only documentée, scoping Better Auth et rapport conformité ajoutés | Rate limiting Upstash, SCA/Snyk, DAST et CSP enforced restent à exécuter |
+| 7 — Observabilité & fiabilité | À faire | — |
+| 8 — i18n & release | À faire | — |
