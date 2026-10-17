@@ -19,6 +19,6 @@
 | B8 | Sécurité avancée | En cours | Headers CSP report-only renforcés et workflow CodeQL existant | Upstash rate limiting, Snyk et DAST restent à intégrer |
 | C1 | Validation finale | À faire | — | Déploiement Vercel, CI main et PRs doivent être vérifiés |
 | C2 | Game day / post-mortem | En cours | Trois scénarios d’incident documentés dans `reports/post-mortem.md` | Exécution des simulations et revue opérationnelle restent à faire |
-| C3 | Release v1.0.0 | ✅ Terminé | Commit `58b0687` poussé sur `main`, tag Git `v1.0.0` publié et rapports finaux préparés | GitHub Release UI reste optionnelle; CI distante à suivre en C1 |
+| C3 | Release v1.0.0 | ✅ Terminé | Release GitHub publique publiée : https://github.com/aymenmeer-sys/expert-meteo/releases/tag/v1.0.0; CI verte sur `59a113d` : https://github.com/aymenmeer-sys/expert-meteo/actions/runs/38989439380; rapports finaux générés | Déploiement Vercel public et audits C1 restent hors de cette clôture |
 
 Dernière mise à jour : 2026-10-17
