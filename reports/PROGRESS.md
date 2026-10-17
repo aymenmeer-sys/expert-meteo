@@ -26,7 +26,7 @@ Dernière mise à jour : 2026-10-17
 - Page `/compte` convertie en Client Component, avec spinner pendant `isPending` et redirection `router.replace('/sign-in')` différée après chargement.
 - Middleware `middleware.ts` ajouté avec vérification cookie-only via `getSessionCookie(request)` sur `/compte/:path*`; l’autorisation réelle reste portée par Better Auth.
 - `BETTER_AUTH_URL` est incluse explicitement dans `trustedOrigins`.
-- Middleware simplifié en vérification cookie-only `getSessionCookie(request)`, sans appel base de données, avec protection de `/compte/:path*` et `/admin/:path*`.
+- Alternative robuste : middleware supprimé pour éviter tout crash Edge/Next lié à `better-auth/cookies`. `/compte` reste un Client Component autonome avec `useSession()` et redirection client vers `/sign-in`; aucune logique auth ne s’exécute dans le middleware.
 
 | Chantier | Statut | Preuve |
 |---|---|---|
