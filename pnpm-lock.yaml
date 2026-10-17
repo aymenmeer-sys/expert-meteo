@@ -121,6 +121,9 @@ importers:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.13.0(jiti@2.7.0)(supports-color@8.1.1))
+      '@netlify/plugin-nextjs':
+        specifier: ^5.16.2
+        version: 5.16.2
       '@playwright/test':
         specifier: ^1.64.1
         version: 1.64.1
@@ -1689,6 +1692,10 @@ packages:
     peerDependencies:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
+
+  '@netlify/plugin-nextjs@5.16.2':
+    resolution: {integrity: sha512-bjB7UsijeAbWFceYeDOHG9vnRQ+AQGCn3198OB0ctXI43W4VXm7rG155dBaX9kpJyRf5zrcf321I1ZpWwi/neg==}
+    engines: {node: '>=18.0.0'}
 
   '@next/env@16.4.0':
     resolution: {integrity: sha512-pyLlT5oafGlX8X7xjgGNXz5dNIDSxREm+qD6i9VLSZiZFopA/XWl8NM/KPmLx/8EG/++c49iid3gNWSQW1+2dQ==}
@@ -7420,6 +7427,8 @@ snapshots:
       '@emnapi/runtime': 1.10.0
       '@tybys/wasm-util': 0.10.4
     optional: true
+
+  '@netlify/plugin-nextjs@5.16.2': {}
 
   '@next/env@16.4.0': {}
 
