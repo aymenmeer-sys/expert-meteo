@@ -32,8 +32,8 @@ export const AccountMenu = () => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="truncate">{session.user.name || session.user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => window.location.assign('/compte')}><UserCircle data-icon="inline-start" /> Mon compte</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => window.location.assign('/compte/abonnement')}>Mon abonnement</DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/compte" />}><UserCircle data-icon="inline-start" /> Mon compte</DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/compte/abonnement" />}>Mon abonnement</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive"><LogOut data-icon="inline-start" /> Déconnexion</DropdownMenuItem>
       </DropdownMenuContent>
