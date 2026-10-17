@@ -2,7 +2,7 @@
 
 | ID | Tâche | Statut | Notes |
 |---|---|---|---|
-| A1 | i18n complet FR/EN/ES/DE | En cours | Interface actuelle FR/EN partielle; messages et routes restantes |
+| A1 | i18n complet FR/EN/ES/DE | En cours | Bascule FR/EN/ES/DE et dictionnaire principal ajoutés; textes secondaires, routes localisées et hreflang restent à finaliser |
 | A2 | Prévisions complètes | En cours | API active: 48h+ horaire, 14 jours, 7 jours historiques; tendance 30 jours à finaliser |
 | A3 | Multi-villes / multi-modèles | En cours | Endpoint accepte best_match/GFS/ECMWF/ICON; sélecteur et tests comparatifs à finaliser |
 | A4 | Alertes persistantes | Partiel | UI présente; persistance utilisateur à finaliser |

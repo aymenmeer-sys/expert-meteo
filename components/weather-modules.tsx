@@ -5,7 +5,7 @@ import { BellRing, CloudRain, Leaf, Waves, Wheat, X } from 'lucide-react'
 
 type Comparison = { city: string; temp: number; rain: number; trend: string }
 
-export function WeatherModules({ comparisons, language }: { comparisons: Comparison[]; language: 'fr' | 'en' }) {
+export function WeatherModules({ comparisons, language }: { comparisons: Comparison[]; language: 'fr' | 'en' | 'es' | 'de' }) {
   const [active, setActive] = useState<'compare' | 'marine' | 'agri' | 'pollen' | 'alerts'>('compare')
   const [alerts, setAlerts] = useState<string[]>([])
   const labels = language === 'fr'
