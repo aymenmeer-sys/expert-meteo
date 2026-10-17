@@ -1,6 +1,8 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client'
 
 type AccountUser = {
@@ -14,8 +16,15 @@ type AccountClientProps = {
 }
 
 export const AccountClient = ({ initialUser }: AccountClientProps) => {
+  const router = useRouter()
   const { data: session, isPending } = authClient.useSession()
   const user = session?.user ?? initialUser
+
+  useEffect(() => {
+    if (!isPending && !session?.user) {
+      router.replace('/sign-in')
+    }
+  }, [isPending, router, session?.user])
 
   if (isPending && !session?.user) {
     return (
