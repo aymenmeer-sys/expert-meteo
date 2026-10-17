@@ -10,7 +10,7 @@ test('dashboard météo affiche les modules principaux', async ({ page }) => {
 test('la page connexion est accessible', async ({ page }) => {
   test.skip(!process.env.CI, 'E2E exécutés uniquement dans GitHub Actions')
   await page.goto('/sign-in')
-  await expect(page.getByRole('heading', { name: /connexion/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /se connecter/i })).toBeVisible()
   await expect(page.getByLabel('Email')).toBeVisible()
   await expect(page.getByLabel('Mot de passe')).toBeVisible()
 })

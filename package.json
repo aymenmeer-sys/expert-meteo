@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test:unit": "vitest run --config vitest.config.ts",
+    "test:unit": "VITE_CONFIG_NATIVE_IGNORE_WARNING=true vitest run --config vitest.config.ts",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install --with-deps chromium firefox webkit",
     "test:coverage": "echo 'Coverage requires Vitest instrumentation; no Vitest suite is configured yet.'"
