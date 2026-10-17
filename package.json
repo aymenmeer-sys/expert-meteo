@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install --with-deps chromium firefox webkit",
+    "test:coverage": "echo 'Coverage requires Vitest instrumentation; no Vitest suite is configured yet.'"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

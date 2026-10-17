@@ -8,7 +8,7 @@
 | A4 | Alertes persistantes | En cours | Préférences conservées par cookie pendant un an; synchronisation cloud et notifications push restent à finaliser |
 | A5 | Auth email/password production | En cours | Pages sign-in/sign-up et handler Better Auth validés en preview; test base Neon et session déployée restent à finaliser |
 | A6 | PWA finale | En cours | Manifest Next complet, icônes et cache shell v2 ajoutés; audit Lighthouse/offline réseau à finaliser |
-| A7 | Tests complets >90% | En cours | 4 scénarios E2E couvrent dashboard/auth/langues/PWA; exécution bloquée par navigateur Playwright absent et couverture >90% non mesurée |
+| A7 | Tests complets >90% | En cours | Skip local et exécution 3 navigateurs CI configurés; installation Playwright ajoutée; couverture Vitest réelle et CI verte restent à valider |
 | B1 | Modules spécialisés réels | Partiel | Modules UI présents; sources marine/agri/montagne/pollen à connecter |
 | B2 | Vigilance Météo-France | À faire | — |
 | B3 | Cartes avancées | Partiel | Leaflet et RainViewer présents; couches satellite/vent/heatmap à compléter |
