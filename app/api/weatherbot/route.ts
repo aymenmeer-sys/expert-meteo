@@ -20,6 +20,12 @@ export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null) as { message?: unknown } | null
   const message = typeof body?.message === 'string' ? body.message.trim().slice(0, 500) : ''
   if (!message) return Response.json({ error: 'Message requis' }, { status: 400 })
-  const result = await generateText({ model: 'openai/o4-mini', system: 'Tu es MétéoBot, un assistant météo précis et concis. Utilise weatherTool dès qu’une ville ou une prévision est mentionnée. Réponds en français, avec des conseils pratiques.', prompt: message, tools: { weatherTool }, stopWhen: ({ steps }) => steps.length >= 3 })
-  return Response.json({ text: result.text })
+  try {
+    const result = await generateText({ model: 'openai/o4-mini', system: 'Tu es MétéoBot, un assistant météo précis et concis. Utilise weatherTool dès qu’une ville ou une prévision est mentionnée. Réponds en français, avec des conseils pratiques.', prompt: message, tools: { weatherTool }, stopWhen: ({ steps }) => steps.length >= 3 })
+    return Response.json({ text: result.text })
+  } catch {
+    const normalized = message.toLowerCase()
+    const text = normalized.includes('pluie') || normalized.includes('parapluie') ? 'Sans connexion IA, vérifiez la probabilité de précipitation locale avant de sortir et prenez un parapluie par prudence.' : normalized.includes('vent') ? 'Sans connexion IA, consultez la vitesse du vent et évitez les activités exposées si les rafales sont fortes.' : 'MétéoBot est temporairement hors connexion. Consultez les conditions actuelles et les alertes locales pour une décision fiable.'
+    return Response.json({ text, fallback: true })
+  }
 }

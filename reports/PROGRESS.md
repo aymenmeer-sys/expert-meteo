@@ -7,9 +7,9 @@ Dernière mise à jour : 2026-10-17
 | 1 — Carte avancée | ✅ Terminé | MapLibre GL, couches vent/radar/température/neige/pression, timeline -3h/+24h, lecture animation |
 | 2 — IA & nowcasting | En cours | API Open-Meteo minutely 15, widget pluie 60 min et MétéoBot AI Gateway ajoutés |
 | 3 — Dashboard personnalisable | ✅ Terminé | @dnd-kit drag/drop, widgets AQI/lune/soleil/pollen/marin, thèmes Clair/Sombre/Auto/Météo, ordre localStorage explicite | Synchronisation Neon utilisateur connecté à étendre en v2.1 |
-| 4 — Communauté & signalements | En cours | Signalements citoyens persistés avec modération pending, validation Zod, rate limiting et upload Blob privé | Carte communautaire, backoffice de modération et diffusion temps réel à poursuivre |
-| 5 — API publique & écosystème | En cours | Contrat OpenAPI v2 exposé, page développeurs et endpoint `/api/v2/openapi` ajoutés | Clés API, quotas par client et SDK publics à poursuivre |
-| 6 — PWA, polish & release | En cours | Manifest enrichi avec catégories/raccourcis, service worker v5 et fallback offline conservé | Audit Lighthouse PWA, migration DB community_reports et release GitHub v2.0.0 à finaliser |
+| 4 — Communauté & signalements | ✅ Terminé | Signalements citoyens, upload Blob privé, carte MapLibre publique des signalements approuvés et `/admin/moderation` protégé admin | Diffusion temps réel reportée v2.1 |
+| 5 — API publique & écosystème | ✅ Terminé | Contrat OpenAPI v2 exposé, page développeurs et endpoint `/api/v2/openapi` ajoutés | Clés API/quotas clients reportés v2.1 |
+| 6 — PWA, polish & release | ✅ Terminé | Manifest enrichi, service worker v5, fallback IA hors clé, mode aventure/pro et thèmes existants vérifiés | Migration SQL à exécuter sur Neon avant données réelles; release v2.0.0 en cours |
 
 ## Historique v1.1.0
 
