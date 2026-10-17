@@ -13,6 +13,13 @@ Dernière mise à jour : 2026-10-17
 - E2E Playwright préparés et tests API/manifest passés; exécution navigateur bloquée dans le sandbox par `libnspr4.so` manquante, hors code projet.
 - Artefacts Playwright ignorés et nettoyage poussé sur `main` (`69e4394`).
 
+## Correctif production — menu compte et météo
+
+- Menu utilisateur rendu explicite pour les états pending, connecté et déconnecté.
+- Modèle `best_match` retiré de la query Open-Meteo : il est le défaut et ne doit pas être envoyé dans `models`.
+- Fetch client météo traite désormais les réponses HTTP d’erreur comme des erreurs SWR visibles.
+- Header global sans logo ni barre doublon; il conserve uniquement le menu de compte superposé, avec Connexion pendant le chargement ou hors session.
+
 | Chantier | Statut | Preuve |
 |---|---|---|
 | 1 — Stripe & SaaS | ✅ Terminé | `/tarifs`, Checkout récurrent, portail client, webhook et table subscriptions |

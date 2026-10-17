@@ -12,7 +12,8 @@ export async function GET(request: NextRequest) {
   const city = request.nextUrl.searchParams.get('city')?.trim() || 'Paris'
   logEvent('weather.request', { city: city.slice(0, 80), method: request.method })
   const modelParam = request.nextUrl.searchParams.get('model') || 'best_match'
-  const model = ['best_match', 'gfs_seamless', 'ecmwf_ifs025', 'icon_seamless'].includes(modelParam) ? modelParam : 'best_match'
+  const model = ['gfs_seamless', 'ecmwf_ifs025', 'icon_seamless'].includes(modelParam) ? modelParam : null
+  const modelQuery = model ? `&models=${model}` : ''
   let place: { name: string; country: string; latitude: number; longitude: number } | undefined
   try {
     const geoResponse = await fetch(`${geocodeUrl}?name=${encodeURIComponent(city)}&count=1&language=fr&format=json`, { next: { revalidate: 900 }, signal: AbortSignal.timeout(8000) })
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
   if (!place) return NextResponse.json({ error: 'Ville introuvable' }, { status: 404 })
   let response: Response
   try {
-    response = await fetch(`${forecastUrl}?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m,surface_pressure,visibility,dew_point_2m,cloud_cover&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,sunrise,sunset,uv_index_max&past_days=7&timezone=auto&forecast_days=30&models=${model}`, { next: { revalidate: 900 }, signal: AbortSignal.timeout(12000) })
+    response = await fetch(`${forecastUrl}?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m,surface_pressure,visibility,dew_point_2m,cloud_cover&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,sunrise,sunset,uv_index_max&past_days=7&timezone=auto&forecast_days=16${modelQuery}`, { next: { revalidate: 900 }, signal: AbortSignal.timeout(12000) })
   } catch {
     return NextResponse.json({ error: 'Service météo indisponible' }, { status: 502 })
   }

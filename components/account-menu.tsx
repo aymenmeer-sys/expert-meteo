@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { LogOut, UserCircle } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -9,9 +10,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 export const AccountMenu = () => {
   const { data: session, isPending } = authClient.useSession()
 
-  if (isPending || !session?.user) return null
+  if (isPending || !session?.user) return <Link href="/sign-in" className="rounded-lg px-3 py-2 text-sm font-medium text-cyan-200 transition-colors hover:bg-white/10 hover:text-white">Connexion</Link>
 
-  const initials = session.user.name?.trim().slice(0, 2).toUpperCase() || session.user.email?.slice(0, 2).toUpperCase() || 'ME'
+  const initials = session.user.name?.trim().split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase() || session.user.email?.slice(0, 2).toUpperCase() || 'ME'
 
   const handleSignOut = async () => {
     await authClient.signOut()
@@ -20,7 +21,7 @@ export const AccountMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-colors hover:bg-white/10" aria-label="Ouvrir le menu du compte">
+      <DropdownMenuTrigger type="button" className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300" aria-label="Ouvrir le menu du compte">
         <Avatar className="size-8">
           <AvatarFallback className="bg-cyan-300 text-xs font-semibold text-[#081522]">{initials}</AvatarFallback>
         </Avatar>

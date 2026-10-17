@@ -2,7 +2,12 @@
 
 import useSWR from 'swr'
 
-const fetcher = (url: string) => fetch(url).then((response) => response.json())
+const fetcher = async (url: string) => {
+  const response = await fetch(url)
+  const payload = await response.json()
+  if (!response.ok || payload.error) throw new Error(payload.error || 'Weather request failed')
+  return payload
+}
 
 export function LiveWeather({ city }: { city: string }) {
   const { data, error, isLoading } = useSWR(`/api/weather?city=${encodeURIComponent(city.split(',')[0])}`, fetcher, { refreshInterval: 900000 })
