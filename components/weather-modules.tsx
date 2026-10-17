@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { BellRing, CloudRain, Leaf, Waves, Wheat, X } from 'lucide-react'
 
 type Comparison = { city: string; temp: number; rain: number; trend: string }
@@ -8,6 +8,13 @@ type Comparison = { city: string; temp: number; rain: number; trend: string }
 export function WeatherModules({ comparisons, language }: { comparisons: Comparison[]; language: 'fr' | 'en' | 'es' | 'de' }) {
   const [active, setActive] = useState<'compare' | 'marine' | 'agri' | 'pollen' | 'alerts'>('compare')
   const [alerts, setAlerts] = useState<string[]>([])
+  useEffect(() => {
+    const saved = document.cookie.split('; ').find((item) => item.startsWith('meteoexpert-alerts='))?.split('=')[1]
+    if (saved) setAlerts(saved.split(',').filter(Boolean))
+  }, [])
+  useEffect(() => {
+    document.cookie = `meteoexpert-alerts=${encodeURIComponent(alerts.join(','))}; max-age=31536000; path=/; samesite=lax`
+  }, [alerts])
   const labels = language === 'fr'
     ? { compare: 'Comparaison', marine: 'Marine', agri: 'Agricole', pollen: 'Pollen', alerts: 'Alertes' }
     : { compare: 'Compare', marine: 'Marine', agri: 'Agriculture', pollen: 'Pollen', alerts: 'Alerts' }
