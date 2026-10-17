@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { LogOut, UserCircle } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -8,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 export const AccountMenu = () => {
+  const router = useRouter()
   const { data: session, isPending } = authClient.useSession()
 
   if (isPending || !session?.user) return <Link href="/sign-in" className="rounded-lg px-3 py-2 text-sm font-medium text-cyan-200 transition-colors hover:bg-white/10 hover:text-white">Connexion</Link>
@@ -16,7 +18,8 @@ export const AccountMenu = () => {
 
   const handleSignOut = async () => {
     await authClient.signOut()
-    window.location.assign('/')
+    router.refresh()
+    router.push('/')
   }
 
   return (
