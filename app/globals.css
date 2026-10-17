@@ -178,6 +178,10 @@
 @keyframes twinkle { from { opacity: .18; transform: scale(.8); } to { opacity: .9; transform: scale(1.5); } }
 @keyframes atmosphere-drift { from { transform: translate3d(-1%, -1%, 0) scale(1); } to { transform: translate3d(1%, 1%, 0) scale(1.04); } }
 @media (prefers-reduced-motion: reduce) { .weather-atmosphere *, .weather-atmosphere { animation: none !important; transition: none !important; } }
+.weather-map__wind { background-image: repeating-linear-gradient(115deg, transparent 0 18px, rgba(96, 214, 255, .24) 19px 20px, transparent 21px 38px); animation: wind-flow 7s linear infinite; mix-blend-mode: screen; }
+.weather-map__rain { background-image: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, .32), transparent 18%), radial-gradient(circle at 70% 55%, rgba(59, 130, 246, .28), transparent 24%), radial-gradient(circle at 45% 80%, rgba(14, 165, 233, .25), transparent 18%); filter: blur(7px); animation: radar-pulse 4s ease-in-out infinite alternate; }
+@keyframes wind-flow { to { background-position: 76px 0; } }
+@keyframes radar-pulse { from { opacity: .45; transform: scale(.98); } to { opacity: .85; transform: scale(1.03); } }
 .focus-mode aside, .focus-mode header > div:last-child, .focus-mode #forecast, .focus-mode #maps, .focus-mode section[aria-labelledby="analysis-title"] { display: none; }
 .focus-mode section { max-width: 58rem; margin-inline: auto; }
 .focus-mode article:first-child { min-height: 26rem; display: grid; place-items: center; }
