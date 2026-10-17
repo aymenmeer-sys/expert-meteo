@@ -28,6 +28,23 @@ test('les contrôles de langue et de modèle sont disponibles', async ({ page })
   await expect(model).toHaveText('ECMWF')
 })
 
+test('les pages SEO locales sont indexables', async ({ page }) => {
+  test.skip(!process.env.CI, 'E2E exécutés uniquement dans GitHub Actions')
+  await page.goto('/villes/paris')
+  await expect(page).toHaveTitle(/Météo Paris/i)
+  await expect(page.getByRole('heading', { name: 'Météo à Paris' })).toBeVisible()
+  await page.goto('/actualites')
+  await expect(page).toHaveTitle(/Actualités météo/i)
+  await expect(page.getByRole('heading', { name: /La météo expliquée clairement/i })).toBeVisible()
+})
+
+test('le skip link est visible au clavier', async ({ page }) => {
+  test.skip(!process.env.CI, 'E2E exécutés uniquement dans GitHub Actions')
+  await page.goto('/')
+  await page.keyboard.press('Tab')
+  await expect(page.getByRole('link', { name: 'Aller au contenu principal' })).toBeVisible()
+})
+
 test('le manifeste PWA est exposé', async ({ request }) => {
   test.skip(!process.env.CI, 'E2E exécutés uniquement dans GitHub Actions')
   const response = await request.get('/manifest.webmanifest')
