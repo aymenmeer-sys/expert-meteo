@@ -9,6 +9,7 @@ import { WeatherModules } from '@/components/weather-modules'
 import useSWR from 'swr'
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json())
+type ModelComparison = { city: string; models: Array<{ model: string; temperature: number | null }> }
 type WeatherPayload = { current?: { temperature_2m: number; apparent_temperature: number; relative_humidity_2m: number; wind_speed_10m: number; wind_gusts_10m?: number; surface_pressure: number; visibility?: number; dew_point_2m?: number; cloud_cover?: number; weather_code: number }; air?: { european_aqi?: number; pm2_5?: number; pm10?: number; ozone?: number; nitrogen_dioxide?: number } | null; daily?: { temperature_2m_max: number[]; temperature_2m_min: number[]; precipitation_probability_max: number[]; sunrise: string[]; sunset: string[]; uv_index_max?: number[] }; hourly?: { time: string[]; temperature_2m: number[]; precipitation_probability: number[] }; place?: { name: string; country: string; latitude: number; longitude: number }; error?: string }
 
 const WeatherMap = dynamic(() => import('@/components/weather-map').then((module) => module.WeatherMap), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-2xl bg-white/[0.04]" /> })
@@ -77,6 +78,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
   const copy = translations[language]
   const languages: Language[] = ['fr', 'en', 'es', 'de']
   const { data: weather } = useSWR<WeatherPayload>(`/api/weather?city=${encodeURIComponent(city.split(',')[0])}&model=${model}`, fetcher, { refreshInterval: 900000, revalidateOnFocus: true })
+  const { data: comparisonData } = useSWR<{ cities: ModelComparison[] }>('/api/weather/compare?cities=Paris,Lyon,Bordeaux', fetcher, { refreshInterval: 900000 })
   const filteredCities = useMemo(() => cities.filter((item) => item.toLowerCase().includes(query.toLowerCase())), [query])
   const formatTemp = (value: number) => unit === 'C' ? `${Math.round(value)}°` : `${Math.round(value * 1.8 + 32)}°`
   const current = weather?.current
@@ -134,7 +136,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">{copy.interactive}</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
           </section>
 
-          <WeatherModules language={language} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
+          <WeatherModules language={language} modelComparisons={comparisonData?.cities} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
 
           <section className="mt-8 grid gap-5 xl:grid-cols-2" aria-label={language === 'fr' ? 'Prévisions détaillées et historique' : 'Detailed forecast and history'}>
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">
