@@ -14,10 +14,7 @@ type WeatherPayload = { current?: { temperature_2m: number; apparent_temperature
 const WeatherMap = dynamic(() => import('@/components/weather-map').then((module) => module.WeatherMap), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-2xl bg-white/[0.04]" /> })
 import {
   Bell,
-  CheckCircle2,
   ChevronDown,
-  Circle,
-  Clock3,
   CloudDrizzle,
   CloudSun,
   Compass,
@@ -67,7 +64,6 @@ export default function Page() {
   const [city, setCity] = useState('Paris, France')
   const [favorite, setFavorite] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [taskPanelOpen, setTaskPanelOpen] = useState(true)
   const [unit, setUnit] = useState<'C' | 'F'>('C')
   const [language, setLanguage] = useState<'fr' | 'en'>('fr')
   const { data: weather } = useSWR<WeatherPayload>(`/api/weather?city=${encodeURIComponent(city.split(',')[0])}`, fetcher, { refreshInterval: 900000, revalidateOnFocus: true })
@@ -105,10 +101,9 @@ export default function Page() {
               <input aria-label="Rechercher une ville" value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229 && filteredCities[0]) { setCity(filteredCities[0]); setQuery('') } }} placeholder="Rechercher une ville..." className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-500 focus:border-cyan-300/60 focus:bg-white/[0.07]" />
               {query && <div className="absolute left-0 right-0 top-14 z-10 rounded-xl border border-white/10 bg-[#102638] p-2 shadow-2xl">{filteredCities.length ? filteredCities.map((item) => <button key={item} onClick={() => { setCity(item); setQuery('') }} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-white/10"><MapPin size={14} className="text-cyan-300" />{item}</button>) : <p className="p-2 text-sm text-slate-500">Aucune ville trouvée</p>}</div>}
             </div>
-            <div className="flex items-center gap-2 sm:gap-4"><button aria-expanded={taskPanelOpen} aria-controls="task-status-panel" onClick={() => setTaskPanelOpen(!taskPanelOpen)} className="rounded-xl border border-cyan-300/20 bg-cyan-300/10 px-3 py-2 text-xs font-semibold text-cyan-200 hover:bg-cyan-300/20">Tâches</button><button aria-label="Changer la langue" onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')} className="hidden text-xs font-semibold text-slate-400 sm:block">{language.toUpperCase()}</button><a href="/sign-in" className="hidden text-xs text-cyan-300 sm:block">Connexion</a><button className="hidden items-center gap-2 text-sm text-slate-400 sm:flex" onClick={() => setUnit(unit === 'C' ? 'F' : 'C')}><span className={unit === 'C' ? 'font-bold text-white' : ''}>°C</span><span className="text-slate-600">/</span><span className={unit === 'F' ? 'font-bold text-white' : ''}>°F</span></button><button className="relative rounded-xl border border-white/[0.08] p-2.5 text-slate-400 hover:text-white" aria-label="Notifications"><Bell size={18} /><span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-300" /></button><div className="hidden h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-300 to-blue-500 text-sm font-bold text-[#081522] sm:flex">AM</div></div>
+            <div className="flex items-center gap-2 sm:gap-4"><button aria-label="Changer la langue" onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')} className="hidden text-xs font-semibold text-slate-400 sm:block">{language.toUpperCase()}</button><a href="/sign-in" className="hidden text-xs text-cyan-300 sm:block">Connexion</a><button className="hidden items-center gap-2 text-sm text-slate-400 sm:flex" onClick={() => setUnit(unit === 'C' ? 'F' : 'C')}><span className={unit === 'C' ? 'font-bold text-white' : ''}>°C</span><span className="text-slate-600">/</span><span className={unit === 'F' ? 'font-bold text-white' : ''}>°F</span></button><button className="relative rounded-xl border border-white/[0.08] p-2.5 text-slate-400 hover:text-white" aria-label="Notifications"><Bell size={18} /><span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-300" /></button><div className="hidden h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-300 to-blue-500 text-sm font-bold text-[#081522] sm:flex">AM</div></div>
           </header>
 
-          {taskPanelOpen && <aside id="task-status-panel" aria-label="État des tâches" className="mt-5 rounded-2xl border border-cyan-300/15 bg-[#0d2132] p-4 shadow-xl shadow-cyan-950/20 lg:fixed lg:right-6 lg:top-24 lg:z-20 lg:mt-0 lg:w-80"><div className="flex items-center justify-between"><div><p className="text-sm font-semibold text-white">Suivi du projet</p><p className="mt-1 text-[11px] text-slate-500">Avancement des fonctionnalités</p></div><button onClick={() => setTaskPanelOpen(false)} aria-label="Fermer la fenêtre des tâches" className="rounded-lg p-1.5 text-slate-500 hover:bg-white/10 hover:text-white"><X size={15} /></button></div><div className="mt-4 space-y-3"><TaskStatus label="Interface dashboard météo" status="done" /><TaskStatus label="API météo Open-Meteo" status="done" /><TaskStatus label="Carte Leaflet et radar pluie" status="done" /><TaskStatus label="Graphiques Recharts" status="done" /><TaskStatus label="Authentification email / mot de passe" status="done" /><TaskStatus label="Modules marine, agricole et pollen" status="done" /><TaskStatus label="i18n français / anglais" status="progress" /><TaskStatus label="Tests E2E et observabilité" status="todo" /><TaskStatus label="Déploiement production final" status="todo" /></div></aside>}
 
           <div id="dashboard" className="mt-10 flex flex-wrap items-end justify-between gap-4"><div><div className="flex items-center gap-2 text-sm text-slate-400"><MapPin size={15} className="text-cyan-300" />{city}<button onClick={() => setFavorite(!favorite)} aria-label="Ajouter aux favoris" className="ml-1 hover:text-amber-300"> <Heart size={15} fill={favorite ? 'currentColor' : 'none'} className={favorite ? 'text-amber-300' : ''} /></button></div><h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Bonjour, Aymen <span aria-hidden="true">.</span></h1><p className="mt-2 text-sm text-slate-500">Jeudi 16 octobre 2026 <span className="mx-2 text-slate-700">•</span> Dernière mise à jour à 10:42</p><div className="mt-2"><LiveWeather city={city} /></div></div><button onClick={() => navigator.geolocation?.getCurrentPosition((position) => setCity(`${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}`))} className="flex items-center gap-2 rounded-xl border border-white/[0.08] px-3 py-2 text-xs text-slate-400 hover:border-white/20 hover:text-white"><LocateFixed size={14} /> Ma position</button></div>
 
@@ -147,11 +142,4 @@ export default function Page() {
 
 function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return <div className="flex items-center gap-2.5"><span className="text-cyan-300/70">{icon}</span><div><p className="text-[11px] text-slate-500">{label}</p><p className="mt-0.5 text-xs font-medium text-slate-200">{value}</p></div></div>
-}
-
-function TaskStatus({ label, status }: { label: string; status: 'done' | 'progress' | 'todo' }) {
-  const styles = status === 'done' ? 'text-emerald-300' : status === 'progress' ? 'text-amber-300' : 'text-slate-500'
-  const Icon = status === 'done' ? CheckCircle2 : status === 'progress' ? Clock3 : Circle
-  const text = status === 'done' ? 'Fait' : status === 'progress' ? 'En cours' : 'À faire'
-  return <div className="flex items-center gap-3"><Icon size={16} className={styles} aria-hidden="true" /><span className="min-w-0 flex-1 text-xs text-slate-300">{label}</span><span className={`text-[10px] font-semibold ${styles}`}>{text}</span></div>
 }
