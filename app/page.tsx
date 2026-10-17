@@ -136,7 +136,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">{copy.interactive}</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
           </section>
 
-          <WeatherModules language={language} modelComparisons={comparisonData?.cities} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
+          <WeatherModules language={language} latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} modelComparisons={comparisonData?.cities} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
 
           <section className="mt-8 grid gap-5 xl:grid-cols-2" aria-label={language === 'fr' ? 'Prévisions détaillées et historique' : 'Detailed forecast and history'}>
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">

@@ -9,7 +9,7 @@
 | A5 | Auth email/password production | En cours | Pages sign-in/sign-up, handler Better Auth, DATABASE_URL/BETTER_AUTH_SECRET et trusted origins vérifiés; écran `/sign-in` rendu en preview | Parcours inscription/session persistée et test déployé restent à finaliser |
 | A6 | PWA finale | En cours | Manifest Next corrigé avec id/icônes, enregistrement SW, cache shell v4, cache API météo, fallback `/offline.html` et push worker présents; page et manifest vérifiés au navigateur | Audit Lighthouse et preuve offline navigateur restent à finaliser |
 | A7 | Tests complets >90% | ✅ Terminé | Playwright CI configuré sur Chromium/Firefox/WebKit, 4 scénarios listés, skip local et typecheck validés | Coverage globale >90% et preuve CI distante à consolider en C1 |
-| B1 | Modules spécialisés réels | Partiel | Modules UI présents; sources marine/agri/montagne/pollen à connecter |
+| B1 | Modules spécialisés réels | Partiel | API `/api/weather/specialized` connectée à Open-Meteo Marine, Air Quality pollen et Forecast agriculture; marine/agri/pollen affichent les données réelles | Montagne et tests E2E des modules restent à compléter |
 | B2 | Vigilance Météo-France | À faire | — |
 | B3 | Cartes avancées | Partiel | Leaflet et RainViewer présents; couches satellite/vent/heatmap à compléter |
 | B4 | Favoris cloud | À faire | — |
