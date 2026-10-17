@@ -33,6 +33,8 @@ Dernière mise à jour : 2026-10-17
 - Logout sécurisé sur `/compte` et dans le menu : état de chargement, double-clic bloqué, gestion d’erreur et navigation native `window.location.replace('/')` après suppression de session, sans `router.refresh()` concurrent avec la mise à jour Better Auth.
 - Correction du crash Base UI au logout : `DropdownMenuItem` conserve une seule sémantique interactive native avec `onClick` et `disabled`, sans composition de bouton dans `render`.
 - Service worker versionné `v6` et purge des anciens caches pour éviter de servir un document HTML à la place d’un module JS; le cache ne doit plus réutiliser les anciens assets.
+- CSP élargie pour les tuiles OpenStreetMap/RainViewer, APIs météo, WebSocket Vercel et workers `blob:`; CORP passe à `cross-origin` pour autoriser les ressources cartographiques.
+- Service worker ignore désormais toutes les requêtes cross-origin afin de ne pas intercepter les tuiles ou workers externes.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.
