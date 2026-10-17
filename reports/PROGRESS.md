@@ -2,6 +2,16 @@
 
 Dernière mise à jour : 2026-10-17
 
+## Audit pré-production v3.0.0
+
+- Variables et fallbacks audités; `ENV_CHECKLIST.md` généré.
+- Checklist environnement produite; validation des APIs et des outils qualité en cours.
+- Validation spécialisée durcie sur les plages latitude/longitude et fallback rate limit.
+- APIs vérifiées: météo invalide `404`, coordonnées hors plage `400`, OpenAPI `200`, scénario spécialisé valide `200`.
+- `pnpm lint`, `pnpm typecheck` et `pnpm build` passent. Le build émet seulement les avertissements Better Auth attendus quand les secrets ne sont pas injectés dans le sandbox.
+- `pnpm audit` ne signale aucune vulnérabilité critique; il reste des avis high/moderate transitifs documentés, principalement tooling et dépendances indirectes.
+- E2E Playwright préparés et tests API/manifest passés; exécution navigateur bloquée dans le sandbox par `libnspr4.so` manquante, hors code projet.
+
 | Chantier | Statut | Preuve |
 |---|---|---|
 | 1 — Stripe & SaaS | ✅ Terminé | `/tarifs`, Checkout récurrent, portail client, webhook et table subscriptions |

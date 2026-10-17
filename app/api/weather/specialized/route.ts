@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(request: NextRequest) {
   const latitude = Number(request.nextUrl.searchParams.get('latitude'))
   const longitude = Number(request.nextUrl.searchParams.get('longitude'))
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return NextResponse.json({ error: 'Coordonnées invalides' }, { status: 400 })
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) return NextResponse.json({ error: 'Coordonnées invalides' }, { status: 400 })
   const params = `latitude=${latitude}&longitude=${longitude}&timezone=auto`
   const [marineResponse, pollenResponse, forecastResponse] = await Promise.all([
     fetch(`https://marine-api.open-meteo.com/v1/marine?${params}&current=wave_height,wave_direction,wave_period,wind_wave_height&hourly=wave_height,wave_period`, { next: { revalidate: 900 } }),

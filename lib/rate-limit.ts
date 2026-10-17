@@ -10,6 +10,10 @@ type RateLimitResult = { success: boolean; limit?: number; remaining?: number; r
 
 export const limitRequest = async (key: string): Promise<RateLimitResult> => {
   if (!limiter) return { success: true }
-  const result = await limiter.limit(key)
-  return { success: result.success, limit: result.limit, remaining: result.remaining, reset: result.reset }
+  try {
+    const result = await limiter.limit(key)
+    return { success: result.success, limit: result.limit, remaining: result.remaining, reset: result.reset }
+  } catch {
+    return { success: true }
+  }
 }
