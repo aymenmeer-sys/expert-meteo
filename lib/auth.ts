@@ -2,7 +2,9 @@ import { betterAuth } from 'better-auth'
 import { pool } from '@/lib/db'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
+const productionOrigin = process.env.BETTER_AUTH_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined)
 const originValues = [
+  productionOrigin,
   ...(isDevelopment ? [
     'http://localhost:3000',
     process.env.V0_RUNTIME_URL,
