@@ -22,7 +22,8 @@ Dernière mise à jour : 2026-10-17
 - Page `/compte` convertie en garde client avec `useSession`, état de chargement et redirection contrôlée.
 - `nextCookies()` désactivé temporairement comme demandé; `app/global-error.tsx` recharge une fois les erreurs de chunk.
 - Vercel contient bien `BETTER_AUTH_URL` en Production, mais sa valeur est chiffrée et ne peut pas être vérifiée en clair via `vercel env ls`.
-- Auth stabilisée sans `nextCookies()`; `/compte` attend `isPending === false` avant toute redirection. L’option middleware n’est pas ajoutée: la présence d’un cookie n’est pas une preuve de session valide et risquerait de masquer le diagnostic.
+- Auth stabilisée sans `nextCookies()`; `/compte` est maintenant une Server Component protégée par `auth.api.getSession({ headers: await headers() })`, avec `AccountClient` pour l’hydratation et l’écoute client. Les erreurs serveur sont journalisées avec message et stack sans exposer de détail à l’utilisateur.
+- Aucun middleware cookie-only ajouté: la présence d’un cookie n’est pas une preuve de session valide et l’autorisation reste vérifiée côté serveur.
 
 | Chantier | Statut | Preuve |
 |---|---|---|
