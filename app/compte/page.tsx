@@ -1,35 +1,46 @@
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { auth } from '@/lib/auth'
-import { AccountClient } from '@/components/account-client'
+'use client'
 
-export const dynamic = 'force-dynamic'
+import { useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { authClient } from '@/lib/auth-client'
 
-const AccountPage = async () => {
-  let session
+const AccountPage = () => {
+  const router = useRouter()
+  const { data: session, isPending } = authClient.useSession()
 
-  try {
-    session = await auth.api.getSession({ headers: await headers() })
-  } catch (error) {
-    console.error('[v0] Account session lookup failed', {
-      message: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
-    })
-    throw error
+  useEffect(() => {
+    if (isPending) return
+
+    if (!session) {
+      const timer = window.setTimeout(() => router.replace('/sign-in'), 0)
+      return () => window.clearTimeout(timer)
+    }
+  }, [isPending, router, session])
+
+  if (isPending) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#081522] px-4 text-white" aria-busy="true">
+        <div className="flex items-center gap-3 text-slate-300">
+          <span className="size-5 animate-spin rounded-full border-2 border-cyan-300 border-t-transparent" aria-hidden="true" />
+          <span>Chargement de votre compte…</span>
+        </div>
+      </main>
+    )
   }
 
-  if (!session?.user) {
-    redirect('/sign-in')
-  }
+  if (!session?.user) return null
 
   return (
-    <AccountClient
-      initialUser={{
-        id: session.user.id,
-        name: session.user.name,
-        email: session.user.email,
-      }}
-    />
+    <main id="main-content" className="min-h-screen bg-[#081522] px-4 py-12 text-white sm:px-6">
+      <section className="mx-auto max-w-2xl rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <p className="text-sm text-cyan-300">Mon compte</p>
+        <h1 className="mt-2 text-3xl font-semibold">Bienvenue, {session.user.name || 'membre'}.</h1>
+        <p className="mt-3 text-slate-300">{session.user.email}</p>
+        <p className="mt-8 text-sm text-slate-400">Gérez votre abonnement depuis votre espace abonnement.</p>
+        <Link href="/compte/abonnement" className="mt-5 inline-flex rounded-xl bg-cyan-300 px-4 py-3 font-semibold text-[#081522]">Mon abonnement</Link>
+      </section>
+    </main>
   )
 }
 

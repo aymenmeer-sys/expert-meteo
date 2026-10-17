@@ -23,7 +23,9 @@ Dernière mise à jour : 2026-10-17
 - `nextCookies()` désactivé temporairement comme demandé; `app/global-error.tsx` recharge une fois les erreurs de chunk.
 - Vercel contient bien `BETTER_AUTH_URL` en Production, mais sa valeur est chiffrée et ne peut pas être vérifiée en clair via `vercel env ls`.
 - Auth stabilisée sans `nextCookies()`; `/compte` est maintenant une Server Component protégée par `auth.api.getSession({ headers: await headers() })`, avec `AccountClient` pour l’hydratation et l’écoute client. Les erreurs serveur sont journalisées avec message et stack sans exposer de détail à l’utilisateur.
-- Aucun middleware cookie-only ajouté: la présence d’un cookie n’est pas une preuve de session valide et l’autorisation reste vérifiée côté serveur.
+- Page `/compte` convertie en Client Component, avec spinner pendant `isPending` et redirection `router.replace('/sign-in')` différée après chargement.
+- Middleware `middleware.ts` ajouté avec vérification cookie-only via `getSessionCookie(request)` sur `/compte/:path*`; l’autorisation réelle reste portée par Better Auth.
+- `BETTER_AUTH_URL` est incluse explicitement dans `trustedOrigins`.
 
 | Chantier | Statut | Preuve |
 |---|---|---|
