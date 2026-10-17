@@ -7,7 +7,7 @@
 | A3 | Multi-villes / multi-modèles | ✅ Terminé | Endpoint compare réel, sélection de 2 à 5 villes, sélection de modèles, toggles de visibilité, fusion Recharts et test unitaire ajoutés | Validation CI globale à consolider en C1 |
 | A4 | Alertes persistantes | En cours | Tables Neon `alerts`/`push_subscriptions`, API CRUD auth-scopée, API d’enregistrement push, page `/alertes` CRUD/toggle et bouton d’activation push ajoutés | Variables VAPID, envoi push serveur et E2E restent à implémenter/tester |
 | A5 | Auth email/password production | En cours | Pages sign-in/sign-up, handler Better Auth, DATABASE_URL/BETTER_AUTH_SECRET et trusted origins vérifiés; écran `/sign-in` rendu en preview | Parcours inscription/session persistée et test déployé restent à finaliser |
-| A6 | PWA finale | En cours | Manifest Next complet, icônes et cache shell v2 ajoutés; audit Lighthouse/offline réseau à finaliser |
+| A6 | PWA finale | En cours | Manifest Next corrigé avec id/icônes, enregistrement SW, cache shell v4, cache API météo, fallback `/offline.html` et push worker présents; page et manifest vérifiés au navigateur | Audit Lighthouse et preuve offline navigateur restent à finaliser |
 | A7 | Tests complets >90% | ✅ Terminé | Playwright CI configuré sur Chromium/Firefox/WebKit, 4 scénarios listés, skip local et typecheck validés | Coverage globale >90% et preuve CI distante à consolider en C1 |
 | B1 | Modules spécialisés réels | Partiel | Modules UI présents; sources marine/agri/montagne/pollen à connecter |
 | B2 | Vigilance Météo-France | À faire | — |

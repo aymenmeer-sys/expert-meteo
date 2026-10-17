@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meteoexpert-v3'
-const SHELL_CACHE = ['/', '/manifest.webmanifest', '/icon-light-32x32.png', '/icon-dark-32x32.png', '/apple-icon.png']
+const CACHE_NAME = 'meteoexpert-v4'
+const SHELL_CACHE = ['/', '/offline.html', '/manifest.webmanifest', '/icon-light-32x32.png', '/icon-dark-32x32.png', '/apple-icon.png']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_CACHE)))
@@ -25,5 +25,5 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => { const copy = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)); return response })))
     return
   }
-  event.respondWith(fetch(event.request).catch(() => caches.match(event.request).then((cached) => cached || caches.match('/'))))
+  event.respondWith(fetch(event.request).then((response) => { const copy = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)); return response }).catch(() => caches.match(event.request).then((cached) => cached || (event.request.mode === 'navigate' ? caches.match('/offline.html') : Response.error()))))
 })
