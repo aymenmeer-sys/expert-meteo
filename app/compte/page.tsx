@@ -1,10 +1,28 @@
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { auth } from '@/lib/auth'
+'use client'
 
-const AccountPage = async () => {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) redirect('/sign-in')
+import { useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { authClient } from '@/lib/auth-client'
+
+const AccountPage = () => {
+  const router = useRouter()
+  const { data: session, isPending } = authClient.useSession()
+
+  useEffect(() => {
+    if (!isPending && !session?.user) router.replace('/sign-in')
+  }, [isPending, router, session?.user])
+
+  if (isPending || !session?.user) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#081522] px-4 text-white" aria-busy="true">
+        <div className="flex items-center gap-3 text-slate-300">
+          <span className="size-5 animate-spin rounded-full border-2 border-cyan-300 border-t-transparent" aria-hidden="true" />
+          <span>Vérification de votre session…</span>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main id="main-content" className="min-h-screen bg-[#081522] px-4 py-12 text-white sm:px-6">
@@ -13,7 +31,7 @@ const AccountPage = async () => {
         <h1 className="mt-2 text-3xl font-semibold">Bienvenue, {session.user.name || 'membre'}.</h1>
         <p className="mt-3 text-slate-300">{session.user.email}</p>
         <p className="mt-8 text-sm text-slate-400">Gérez votre abonnement depuis votre espace abonnement.</p>
-        <a href="/compte/abonnement" className="mt-5 inline-flex rounded-xl bg-cyan-300 px-4 py-3 font-semibold text-[#081522]">Mon abonnement</a>
+        <Link href="/compte/abonnement" className="mt-5 inline-flex rounded-xl bg-cyan-300 px-4 py-3 font-semibold text-[#081522]">Mon abonnement</Link>
       </section>
     </main>
   )

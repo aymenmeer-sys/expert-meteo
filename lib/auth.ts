@@ -1,5 +1,4 @@
 import { betterAuth } from 'better-auth'
-import { nextCookies } from 'better-auth/next-js'
 import { pool } from '@/lib/db'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
@@ -22,7 +21,6 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
   baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
   trustedOrigins: originValues,
-  plugins: [nextCookies()],
   ...(process.env.NODE_ENV === 'development' ? {
     advanced: { defaultCookieAttributes: { sameSite: 'none' as const, secure: true } },
   } : {}),

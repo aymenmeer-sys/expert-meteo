@@ -19,6 +19,9 @@ Dernière mise à jour : 2026-10-17
 - Modèle `best_match` retiré de la query Open-Meteo : il est le défaut et ne doit pas être envoyé dans `models`.
 - Fetch client météo traite désormais les réponses HTTP d’erreur comme des erreurs SWR visibles.
 - Header global sans logo ni barre doublon; il conserve uniquement le menu de compte superposé, avec Connexion pendant le chargement ou hors session.
+- Page `/compte` convertie en garde client avec `useSession`, état de chargement et redirection contrôlée.
+- `nextCookies()` désactivé temporairement comme demandé; `app/global-error.tsx` recharge une fois les erreurs de chunk.
+- Vercel contient bien `BETTER_AUTH_URL` en Production, mais sa valeur est chiffrée et ne peut pas être vérifiée en clair via `vercel env ls`.
 
 | Chantier | Statut | Preuve |
 |---|---|---|
