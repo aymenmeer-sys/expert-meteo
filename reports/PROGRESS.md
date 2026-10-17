@@ -31,7 +31,8 @@ Dernière mise à jour : 2026-10-17
 - Page admin auth marquée `force-dynamic` pour empêcher un accès Neon/Better Auth pendant le build Vercel.
 - Secret Better Auth sans fallback permissif en production : l’absence de `BETTER_AUTH_SECRET` échoue explicitement au runtime.
 - Logout sécurisé sur `/compte` et dans le menu : état de chargement, double-clic bloqué, gestion d’erreur et navigation native `window.location.replace('/')` après suppression de session, sans `router.refresh()` concurrent avec la mise à jour Better Auth.
-- Correction du crash Base UI au logout : l’action est maintenant rendue comme un vrai bouton via `DropdownMenuItem render`, au lieu d’un item non interactif recevant `onClick`.
+- Correction du crash Base UI au logout : `DropdownMenuItem` conserve une seule sémantique interactive native avec `onClick` et `disabled`, sans composition de bouton dans `render`.
+- Service worker versionné `v6` et purge des anciens caches pour éviter de servir un document HTML à la place d’un module JS; le cache ne doit plus réutiliser les anciens assets.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.

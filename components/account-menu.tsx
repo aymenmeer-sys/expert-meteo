@@ -44,7 +44,8 @@ export const AccountMenu = () => {
         <DropdownMenuItem render={<Link href="/compte/abonnement" />}>Mon abonnement</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          render={<button type="button" onClick={handleSignOut} disabled={isSigningOut} />}
+          onClick={handleSignOut}
+          disabled={isSigningOut}
           className="w-full text-destructive focus:text-destructive"
         >
           <LogOut data-icon="inline-start" />
