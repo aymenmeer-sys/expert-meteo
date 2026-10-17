@@ -1,5 +1,5 @@
 import { betterAuth } from 'better-auth'
-import { Pool } from 'pg'
+import { pool } from '@/lib/db'
 
 const originValues = [
   'http://localhost:3000',
@@ -12,7 +12,7 @@ const originValues = [
 ].filter((value): value is string => Boolean(value))
 
 export const auth = betterAuth({
-  database: new Pool({ connectionString: process.env.DATABASE_URL }),
+  database: pool,
   emailAndPassword: { enabled: true },
   baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
   trustedOrigins: originValues,
