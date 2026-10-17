@@ -9,4 +9,26 @@ test('dashboard météo affiche les modules principaux', async ({ page }) => {
 test('la page connexion est accessible', async ({ page }) => {
   await page.goto('/sign-in')
   await expect(page.getByRole('heading', { name: /connexion/i })).toBeVisible()
+  await expect(page.getByLabel('Email')).toBeVisible()
+  await expect(page.getByLabel('Mot de passe')).toBeVisible()
+})
+
+test('les contrôles de langue et de modèle sont disponibles', async ({ page }) => {
+  await page.goto('/')
+  const language = page.getByRole('button', { name: 'Changer la langue' })
+  await expect(language).toHaveText('FR')
+  await language.click()
+  await expect(language).toHaveText('EN')
+  const model = page.getByRole('button', { name: 'Changer le modèle météo' })
+  await expect(model).toHaveText('Auto')
+  await model.click()
+  await expect(model).toHaveText('ECMWF')
+})
+
+test('le manifeste PWA est exposé', async ({ request }) => {
+  const response = await request.get('/manifest.webmanifest')
+  expect(response.ok()).toBeTruthy()
+  const manifest = await response.json()
+  expect(manifest.name).toBe('MétéoExpert')
+  expect(manifest.display).toBe('standalone')
 })
