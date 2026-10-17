@@ -22,3 +22,10 @@
 | C3 | Release v1.0.0 | ✅ Terminé | Release GitHub publique publiée : https://github.com/aymenmeer-sys/expert-meteo/releases/tag/v1.0.0; CI verte sur `59a113d` : https://github.com/aymenmeer-sys/expert-meteo/actions/runs/38989439380; rapports finaux générés | Déploiement Vercel public et audits C1 restent hors de cette clôture |
 
 Dernière mise à jour : 2026-10-17
+
+## MétéoExpert v1.1.0
+
+| Chantier | Statut | Preuve |
+|---|---|---|
+| 1 — Design & UX Awwwards | En cours | Atmosphère météo animée jour/nuit/pluie/neige, glassmorphism existant, mode Focus, transitions réduites via `prefers-reduced-motion` |
+| 2 à 8 | À faire | Enchaînement prévu sans pause; aucune tâche finale ne sera cochée avant la release v1.1.0 |
