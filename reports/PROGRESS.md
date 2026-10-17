@@ -1,4 +1,16 @@
-# MétéoExpert — Progression v2.0.0
+# MétéoExpert — Progression v3.0.0
+
+Dernière mise à jour : 2026-10-17
+
+| Chantier | Statut | Preuve |
+|---|---|---|
+| 1 — Stripe & SaaS | ✅ Terminé | `/tarifs`, Checkout récurrent, portail client, webhook et table subscriptions |
+| 2 — Route Weather | ✅ Terminé | `/itineraire`, géocodage Nominatim, routage OSRM, étapes de trajet |
+| 3 — Immersif 3D | ✅ Terminé | `/immersif`, globe React Three Fiber et contrôles orbitaux |
+| 4 — Domotique & calendrier | ✅ Terminé | Webhooks développeurs et `/api/calendar/weather.ics` |
+| 5 — Data-viz & release | ✅ Terminé | `/climat`, historique Open-Meteo, rapport v3.0.0 |
+
+## Progression v2.0.0
 
 Dernière mise à jour : 2026-10-17
 

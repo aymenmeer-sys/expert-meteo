@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.0] — 2026-10-17
+
+- Monétisation Stripe avec plans Gratuit, Premium et API Pro, Checkout, portail client et webhook d’abonnement.
+- Planificateur météo d’itinéraire avec géocodage Nominatim, routage OSRM et étapes de trajet.
+- Globe 3D immersif interactif avec React Three Fiber.
+- Webhooks domotiques, flux calendrier iCal et historique climatique Open-Meteo sur 50 ans.
+
 ## [2.0.0] — 2026-10-17
 
 - Carte MapLibre avancée et timeline météo.
