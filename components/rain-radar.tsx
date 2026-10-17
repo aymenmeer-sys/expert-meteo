@@ -2,9 +2,12 @@
 
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Pause, Play, Wind } from 'lucide-react'
+import useSWR from 'swr'
 import { useEffect, useRef, useState } from 'react'
 
 type Layer = 'wind' | 'rain' | 'temperature' | 'snow' | 'pressure'
+type CommunityReport = { id: string; type: string; description: string; latitude: string; longitude: string; photoPathname?: string | null }
+const fetcher = (url: string) => fetch(url).then((response) => response.json() as Promise<CommunityReport[]>)
 
 const layerLabels: Record<Layer, string> = { wind: 'Vent', rain: 'Radar', temperature: 'Température', snow: 'Neige', pressure: 'Pression' }
 
