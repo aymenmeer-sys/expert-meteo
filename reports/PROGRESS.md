@@ -8,7 +8,7 @@ Dernière mise à jour : 2026-10-17
 | 2 — IA & nowcasting | En cours | API Open-Meteo minutely 15, widget pluie 60 min et MétéoBot AI Gateway ajoutés |
 | 3 — Dashboard personnalisable | ✅ Terminé | @dnd-kit drag/drop, widgets AQI/lune/soleil/pollen/marin, thèmes Clair/Sombre/Auto/Météo, ordre localStorage explicite | Synchronisation Neon utilisateur connecté à étendre en v2.1 |
 | 4 — Communauté & signalements | En cours | Signalements citoyens persistés avec modération pending, validation Zod, rate limiting et upload Blob privé | Carte communautaire, backoffice de modération et diffusion temps réel à poursuivre |
-| 5 — API publique & écosystème | À faire | — |
+| 5 — API publique & écosystème | En cours | Contrat OpenAPI v2 exposé, page développeurs et endpoint `/api/v2/openapi` ajoutés | Clés API, quotas par client et SDK publics à poursuivre |
 | 6 — PWA, polish & release | À faire | — |
 
 ## Historique v1.1.0
