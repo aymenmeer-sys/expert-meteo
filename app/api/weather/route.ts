@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { logEvent } from '@/lib/observability'
 
 const geocodeUrl = 'https://geocoding-api.open-meteo.com/v1/search'
 const forecastUrl = 'https://api.open-meteo.com/v1/forecast'
 
 export async function GET(request: NextRequest) {
   const city = request.nextUrl.searchParams.get('city')?.trim() || 'Paris'
+  logEvent('weather.request', { city: city.slice(0, 80), method: request.method })
   const modelParam = request.nextUrl.searchParams.get('model') || 'best_match'
   const model = ['best_match', 'gfs_seamless', 'ecmwf_ifs025', 'icon_seamless'].includes(modelParam) ? modelParam : 'best_match'
   const geoResponse = await fetch(`${geocodeUrl}?name=${encodeURIComponent(city)}&count=1&language=fr&format=json`, { next: { revalidate: 900 } })
