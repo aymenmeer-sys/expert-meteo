@@ -11,6 +11,7 @@ Dernière mise à jour : 2026-10-17
 - `pnpm lint`, `pnpm typecheck` et `pnpm build` passent. Le build émet seulement les avertissements Better Auth attendus quand les secrets ne sont pas injectés dans le sandbox.
 - `pnpm audit` ne signale aucune vulnérabilité critique; il reste des avis high/moderate transitifs documentés, principalement tooling et dépendances indirectes.
 - E2E Playwright préparés et tests API/manifest passés; exécution navigateur bloquée dans le sandbox par `libnspr4.so` manquante, hors code projet.
+- Artefacts Playwright ignorés et nettoyage poussé sur `main` (`69e4394`).
 
 | Chantier | Statut | Preuve |
 |---|---|---|
