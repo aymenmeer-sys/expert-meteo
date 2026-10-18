@@ -2,12 +2,17 @@ import { betterAuth } from 'better-auth'
 import { pool } from '@/lib/db'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
-const configuredAuthUrl = process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL
+const normalizeOrigin = (value: string | undefined) => value?.replace(/\/$/, '')
+const configuredAuthUrl = normalizeOrigin(process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL)
+const netlifyOrigins = [
+  process.env.NETLIFY_URL,
+  process.env.DEPLOY_PRIME_URL,
+  process.env.URL,
+].map(normalizeOrigin)
 const productionOrigin = configuredAuthUrl || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined)
-const netlifyOrigin = 'https://singular-truffle-7d2d80.netlify.app'
 const originValues = [
   configuredAuthUrl,
-  netlifyOrigin,
+  ...netlifyOrigins,
   productionOrigin,
   ...(isDevelopment ? [
     'http://localhost:3000',
@@ -18,7 +23,7 @@ const originValues = [
   ] : []),
   process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
   process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined,
-  process.env.BETTER_AUTH_URL,
+  ...netlifyOrigins,
 ].filter((value): value is string => Boolean(value))
 
 export const auth = betterAuth({
@@ -28,7 +33,7 @@ export const auth = betterAuth({
   })()),
   database: pool,
   emailAndPassword: { enabled: true },
-  baseURL: configuredAuthUrl || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
+  baseURL: configuredAuthUrl || netlifyOrigins[0] || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) || process.env.V0_RUNTIME_URL || 'http://localhost:3000',
   trustedOrigins: originValues,
   ...(process.env.NODE_ENV === 'development' ? {
     advanced: { defaultCookieAttributes: { sameSite: 'none' as const, secure: true } },

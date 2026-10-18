@@ -37,7 +37,7 @@ Dernière mise à jour : 2026-10-17
 - Service worker ignore désormais toutes les requêtes cross-origin afin de ne pas intercepter les tuiles ou workers externes.
 - Configuration Netlify ajoutée dans `netlify.toml` avec `pnpm build`, publication `.next` et `@netlify/plugin-nextjs`.
 - Fichier `.env.example` créé avec toutes les variables d’environnement disponibles, sans exposer leurs valeurs secrètes.
-- Better Auth utilise désormais `BETTER_AUTH_URL` ou `NEXT_PUBLIC_APP_URL` comme baseURL et fait confiance explicitement à l’origine Netlify `https://singular-truffle-7d2d80.netlify.app`.
+- Better Auth utilise désormais `BETTER_AUTH_URL` ou `NEXT_PUBLIC_APP_URL` comme baseURL et détecte automatiquement les URLs Netlify (`NETLIFY_URL`, `DEPLOY_PRIME_URL`, `URL`), sans domaine Netlify codé en dur.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.
