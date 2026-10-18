@@ -23,6 +23,10 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
         : await authClient.signIn.email({ email, password })
 
       if (result.error) {
+        if ((result.error.status ?? 0) >= 500) {
+          setError('Le service de connexion est momentanément indisponible. Réessayez.')
+          return
+        }
         setError(result.error.message || 'Impossible de valider ces identifiants.')
         return
       }
