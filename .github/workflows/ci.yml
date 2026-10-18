@@ -41,5 +41,5 @@ jobs:
       - run: pnpm exec drizzle-kit push --force
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium firefox webkit
-      - run: pnpm exec playwright test
+      - run: pnpm exec playwright test --workers=1
       - run: pnpm run test:coverage

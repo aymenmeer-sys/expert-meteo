@@ -30,7 +30,7 @@ test('recherche de ville et changement de langue', async ({ page }) => {
   const search = page.getByPlaceholder('Rechercher une ville...')
   await search.fill('Lyon')
   await search.press('Enter')
-  await expect(page.getByText('Lyon')).toBeVisible()
+  await expect(page.getByText('Lyon, France', { exact: true })).toBeVisible()
   const language = page.getByRole('button', { name: 'Changer la langue' })
   await language.click()
   await expect(language).toHaveText('EN')
