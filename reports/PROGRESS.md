@@ -35,7 +35,7 @@ Dernière mise à jour : 2026-10-17
 - Service worker versionné `v6` et purge des anciens caches pour éviter de servir un document HTML à la place d’un module JS; le cache ne doit plus réutiliser les anciens assets.
 - CSP élargie pour les tuiles OpenStreetMap/RainViewer, APIs météo, WebSocket Vercel et workers `blob:`; CORP passe à `cross-origin` pour autoriser les ressources cartographiques.
 - Service worker ignore désormais toutes les requêtes cross-origin afin de ne pas intercepter les tuiles ou workers externes.
-- Configuration Netlify ajoutée dans `netlify.toml` avec `pnpm build`, publication `.next` et `@netlify/plugin-nextjs`.
+- Configuration Netlify retirée pour revenir à Vercel comme hébergeur unique.
 - Fichier `.env.example` créé avec toutes les variables d’environnement disponibles, sans exposer leurs valeurs secrètes.
 - Better Auth utilise désormais `BETTER_AUTH_URL` ou `NEXT_PUBLIC_APP_URL` comme baseURL et détecte automatiquement les URLs Netlify (`NETLIFY_URL`, `DEPLOY_PRIME_URL`, `URL`), sans domaine Netlify codé en dur.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
