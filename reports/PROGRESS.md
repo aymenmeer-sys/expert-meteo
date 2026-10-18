@@ -35,9 +35,8 @@ Dernière mise à jour : 2026-10-17
 - Service worker versionné `v6` et purge des anciens caches pour éviter de servir un document HTML à la place d’un module JS; le cache ne doit plus réutiliser les anciens assets.
 - CSP élargie pour les tuiles OpenStreetMap/RainViewer, APIs météo, WebSocket Vercel et workers `blob:`; CORP passe à `cross-origin` pour autoriser les ressources cartographiques.
 - Service worker ignore désormais toutes les requêtes cross-origin afin de ne pas intercepter les tuiles ou workers externes.
-- Configuration Netlify retirée pour revenir à Vercel comme hébergeur unique.
 - Fichier `.env.example` créé avec toutes les variables d’environnement disponibles, sans exposer leurs valeurs secrètes.
-- Better Auth utilise désormais `BETTER_AUTH_URL` ou `NEXT_PUBLIC_APP_URL` comme baseURL et détecte automatiquement les URLs Netlify (`NETLIFY_URL`, `DEPLOY_PRIME_URL`, `URL`), sans domaine Netlify codé en dur.
+- Better Auth utilise `BETTER_AUTH_URL` ou `NEXT_PUBLIC_APP_URL` comme baseURL de production, avec normalisation de l’origine.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.
@@ -81,7 +80,7 @@ Dernière mise à jour : 2026-10-17
 
 ## Aléas
 
-- Open-Meteo a temporairement répondu « Service météo indisponible »; le fallback applicatif conserve un message contrôlé et l’événement est documenté comme aléa externe.
+- Open-Meteo a temporairement répondu « Service météo indisponible »; le fallback applicatif conserve un message contr��lé et l’événement est documenté comme aléa externe.
 - Le warning Better Auth de schéma DB est non bloquant; ticket backlog v1.1.1 : `chore: fix Better Auth schema`.
 
 ## Backlog v1.1.1
