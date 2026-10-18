@@ -1,6 +1,7 @@
 import { generateText, tool } from 'ai'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
+import { clientKey, limitRequest, tooManyRequests } from '@/lib/rate-limit'
 
 const weatherTool = tool({
   description: 'Fetch current and tomorrow weather for a city using Open-Meteo geocoding and forecast APIs.',
@@ -17,6 +18,8 @@ const weatherTool = tool({
 })
 
 export async function POST(request: NextRequest) {
+  const rate = await limitRequest(`bot:${clientKey(request)}`)
+  if (!rate.success) return tooManyRequests(rate)
   const body = await request.json().catch(() => null) as { message?: unknown } | null
   const message = typeof body?.message === 'string' ? body.message.trim().slice(0, 500) : ''
   if (!message) return Response.json({ error: 'Message requis' }, { status: 400 })

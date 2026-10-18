@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { alignForecast } from '@/lib/forecast-view'
 import { LiveWeather } from '@/components/live-weather'
 import { NowcastCard } from '@/components/nowcast-card'
 import { CustomizableDashboard } from '@/components/customizable-dashboard'
@@ -16,7 +17,7 @@ import useSWR from 'swr'
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json())
 type ModelComparison = { city: string; models: Array<{ model: string; temperature: number | null }> }
-type WeatherPayload = { current?: { temperature_2m: number; apparent_temperature: number; relative_humidity_2m: number; wind_speed_10m: number; wind_gusts_10m?: number; surface_pressure: number; visibility?: number; dew_point_2m?: number; cloud_cover?: number; weather_code: number }; air?: { european_aqi?: number; pm2_5?: number; pm10?: number; ozone?: number; nitrogen_dioxide?: number } | null; daily?: { temperature_2m_max: number[]; temperature_2m_min: number[]; precipitation_probability_max: number[]; sunrise: string[]; sunset: string[]; uv_index_max?: number[] }; hourly?: { time: string[]; temperature_2m: number[]; precipitation_probability: number[] }; place?: { name: string; country: string; latitude: number; longitude: number }; error?: string }
+type WeatherPayload = { current?: { time?: string; temperature_2m: number; apparent_temperature: number; relative_humidity_2m: number; wind_speed_10m: number; wind_gusts_10m?: number; surface_pressure: number; visibility?: number; dew_point_2m?: number; cloud_cover?: number; weather_code: number }; air?: { european_aqi?: number; pm2_5?: number; pm10?: number; ozone?: number; nitrogen_dioxide?: number } | null; daily?: { time?: string[]; temperature_2m_max: number[]; temperature_2m_min: number[]; precipitation_probability_max: number[]; sunrise: string[]; sunset: string[]; uv_index_max?: number[] }; hourly?: { time: string[]; temperature_2m: number[]; precipitation_probability: number[] }; place?: { name: string; country: string; latitude: number; longitude: number }; error?: string }
 
 const WeatherMap = dynamic(() => import('@/components/weather-map').then((module) => module.WeatherMap), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-2xl bg-white/[0.04]" /> })
 import {
@@ -90,9 +91,10 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
   const filteredCities = useMemo(() => cities.filter((item) => item.toLowerCase().includes(query.toLowerCase())), [query])
   const formatTemp = (value: number) => unit === 'C' ? `${Math.round(value)}°` : `${Math.round(value * 1.8 + 32)}°`
   const current = weather?.current
-  const todayHigh = weather?.daily?.temperature_2m_max?.[0] ?? 22
-  const todayLow = weather?.daily?.temperature_2m_min?.[0] ?? 14
-  const liveHourly = useMemo(() => (weather?.hourly?.time ?? []).slice(0, 8).map((time, index) => ({ time: index === 0 ? 'Maint.' : new Date(time).getHours() + 'h', temp: weather?.hourly?.temperature_2m?.[index] ?? 18, rain: weather?.hourly?.precipitation_probability?.[index] ?? 0, icon: CloudSun })), [weather])
+  const view = useMemo(() => alignForecast(weather ?? {}), [weather])
+  const todayHigh = view.daily?.temperature_2m_max?.[0] ?? 22
+  const todayLow = view.daily?.temperature_2m_min?.[0] ?? 14
+  const liveHourly = useMemo(() => (view.hourly?.time ?? []).slice(0, 8).map((time, index) => ({ time: index === 0 ? 'Maint.' : new Date(time).getHours() + 'h', temp: view.hourly?.temperature_2m?.[index] ?? 18, rain: view.hourly?.precipitation_probability?.[index] ?? 0, icon: CloudSun })), [view.hourly])
 
   return (
     <main id="main-content" className={`relative min-h-screen overflow-hidden bg-[#081522] text-slate-100 ${focusMode ? 'focus-mode' : ''}`}><WeatherAtmosphere weatherCode={current?.weather_code} isDay />{vigilance?.available && <div className="border-b border-amber-300/20 bg-amber-300/10 px-6 py-2 text-center text-xs text-amber-100">Vigilance Météo-France disponible · consultez les niveaux départementaux</div>}
@@ -141,7 +143,7 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
           <section className="mt-8 grid gap-5 xl:grid-cols-[1.1fr_0.9fr]" aria-labelledby="analysis-title">
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">
               <div className="mb-4"><h2 id="analysis-title" className="text-lg font-semibold">Tendance des prochaines heures</h2><p className="mt-1 text-xs text-slate-500">Température et risque de pluie</p></div>
-              <ForecastChart hourly={weather?.hourly} /><div className="mt-4"><RainRadar latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} /></div>
+              <ForecastChart hourly={view.hourly} /><div className="mt-4"><RainRadar latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} /></div>
             </article>
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div className="mb-4"><h2 className="text-lg font-semibold">{copy.interactive}</h2><p className="mt-1 text-xs text-slate-500">Position et conditions locales</p></div><WeatherMap city={city.split(',')[0]} /></article>
           </section>
@@ -151,14 +153,14 @@ export default function Page({ initialLanguage = 'fr' }: { initialLanguage?: Lan
           <CommunityReportForm />
           <CommunityReportMap />
 
-          <WeatherModules language={language} latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} modelComparisons={comparisonData?.cities} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (weather?.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: weather?.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
+          <WeatherModules language={language} latitude={weather?.place?.latitude} longitude={weather?.place?.longitude} modelComparisons={comparisonData?.cities} comparisons={cities.slice(0, 3).map((item, index) => ({ city: item.split(',')[0], temp: (view.daily?.temperature_2m_max?.[index] ?? 20) - index, rain: view.daily?.precipitation_probability_max?.[index] ?? [10, 25, 40][index], trend: index === 0 ? 'Stable' : index === 1 ? 'En hausse' : 'En baisse' }))} />
 
           <section className="mt-8 grid gap-5 xl:grid-cols-2" aria-label={language === 'fr' ? 'Prévisions détaillées et historique' : 'Detailed forecast and history'}>
             <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5">
               <div className="flex items-center justify-between"><div><h2 className="text-lg font-semibold">{language === 'fr' ? 'Prévisions détaillées' : 'Detailed forecast'}</h2><p className="mt-1 text-xs text-slate-500">{language === 'fr' ? '10 jours · modèle Open-Meteo' : '10 days · Open-Meteo model'}</p></div><span className="rounded-lg bg-cyan-300/10 px-2 py-1 text-[11px] text-cyan-300">10 J</span></div>
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-7">{(weather?.daily?.temperature_2m_max ?? []).slice(0, 14).map((high, index) => <div key={`${high}-${index}`} className="rounded-xl bg-white/[0.03] p-3 text-center"><p className="text-[10px] text-slate-500">{index === 0 ? (language === 'fr' ? 'Auj.' : 'Today') : `J+${index}`}</p><CloudSun size={19} className="mx-auto my-2 text-amber-300" /><p className="text-sm font-semibold">{formatTemp(high)}</p><p className="mt-1 text-[10px] text-cyan-300">{weather?.daily?.precipitation_probability_max?.[index] ?? 0}%</p></div>)}</div>
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-7">{(view.daily?.temperature_2m_max ?? []).slice(0, 14).map((high, index) => <div key={`${high}-${index}`} className="rounded-xl bg-white/[0.03] p-3 text-center"><p className="text-[10px] text-slate-500">{index === 0 ? (language === 'fr' ? 'Auj.' : 'Today') : `J+${index}`}</p><CloudSun size={19} className="mx-auto my-2 text-amber-300" /><p className="text-sm font-semibold">{formatTemp(high)}</p><p className="mt-1 text-[10px] text-cyan-300">{view.daily?.precipitation_probability_max?.[index] ?? 0}%</p></div>)}</div>
             </article>
-            <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div><h2 className="text-lg font-semibold">{language === 'fr' ? 'Historique météo' : 'Weather history'}</h2><p className="mt-1 text-xs text-slate-500">{language === 'fr' ? 'Tendance 30 jours · températures et précipitations' : '30-day trend · temperature and precipitation'}</p></div><div className="mt-5 flex items-end gap-2" aria-label={language === 'fr' ? 'Températures historiques' : 'Historical temperatures'}>{(weather?.daily?.temperature_2m_max ?? []).slice(0, 30).map((value, index) => <div key={`${value}-history-${index}`} className="flex flex-1 flex-col items-center gap-2"><span className="text-[10px] text-slate-500">{index === 0 ? 'J-6' : `J-${7 - index}`}</span><div className="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-200/80" style={{ height: `${Math.max(30, Math.min(110, value * 4))}px` }} /><span className="text-xs font-medium">{formatTemp(value)}</span></div>)}</div></article>
+            <article className="rounded-2xl border border-white/[0.07] bg-[#0d2132] p-5"><div><h2 className="text-lg font-semibold">{language === 'fr' ? 'Historique météo' : 'Weather history'}</h2><p className="mt-1 text-xs text-slate-500">{language === 'fr' ? 'Tendance 7 jours · températures maximales' : '7-day trend · maximum temperatures'}</p></div><div className="mt-5 flex items-end gap-2" aria-label={language === 'fr' ? 'Températures historiques' : 'Historical temperatures'}>{[...view.pastMax, ...(view.daily?.temperature_2m_max?.slice(0, 1) ?? [])].map((value, index, all) => <div key={`${value}-history-${index}`} className="flex flex-1 flex-col items-center gap-2"><span className="text-[10px] text-slate-500">{index === all.length - 1 ? 'Auj.' : `J-${all.length - 1 - index}`}</span><div className="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-200/80" style={{ height: `${Math.max(30, Math.min(110, value * 4))}px` }} /><span className="text-xs font-medium">{formatTemp(value)}</span></div>)}</div></article>
           </section>
 
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] py-6 text-[11px] text-slate-600"><span>Données météo © Open-Meteo · Mise à jour toutes les 15 min</span><span className="flex items-center gap-2"><Sunset size={13} /> Coucher du soleil à 18:54</span></footer>
