@@ -38,6 +38,7 @@ Dernière mise à jour : 2026-10-17
 - Fichier `.env.example` créé avec toutes les variables d’environnement disponibles, sans exposer leurs valeurs secrètes.
 - Better Auth utilise `BETTER_AUTH_URL` ou `NEXT_PUBLIC_APP_URL` comme baseURL de production, avec normalisation de l’origine.
 - CI initialise désormais le PostgreSQL de service via `drizzle-kit push --force` avant le build et les tests Playwright, afin de créer les tables Better Auth et applicatives.
+- Playwright CI limité à Chromium avec SwiftShader/WebGL activé : Firefox/WebKit échouaient sur les runners sans GPU et masquaient les erreurs fonctionnelles réelles.
 - `/compte` reste un Client Component pur avec `mounted`, `isPending` et redirection client différée.
 - Boundary local `/compte/error.tsx` ajouté pour éviter l’écran générique et proposer Réessayer/Connexion si un runtime error survient.
 - `useSession` exporté explicitement depuis `lib/auth-client.ts`.

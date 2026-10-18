@@ -10,9 +10,13 @@ export default defineConfig({
   webServer: isCI ? { command: 'pnpm dev', url: 'http://localhost:3000', reuseExistingServer: true } : undefined,
   projects: isCI
     ? [
-        { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-        { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-        { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+        {
+          name: 'chromium',
+          use: {
+            ...devices['Desktop Chrome'],
+            launchOptions: { args: ['--use-gl=swiftshader', '--enable-webgl', '--disable-gpu-sandbox'] },
+          },
+        },
       ]
     : [{ name: 'local-list', use: { ...devices['Desktop Chrome'] } }],
 })
