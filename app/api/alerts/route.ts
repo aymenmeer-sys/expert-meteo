@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { alerts } from '@/lib/db/schema'
+import { readJson } from '@/lib/http'
 
 const getUserId = async () => {
   const session = await auth.api.getSession({ headers: await headers() })
@@ -21,17 +22,19 @@ export const GET = async () => {
 export const POST = async (request: Request) => {
   const userId = await getUserId()
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const body = await request.json() as { city?: string; threshold?: number; type?: string }
-  if (!body.city || typeof body.threshold !== 'number' || !body.type) return NextResponse.json({ error: 'Invalid alert' }, { status: 400 })
-  const [alert] = await db.insert(alerts).values({ id: randomUUID(), userId, city: body.city.trim(), threshold: String(body.threshold), type: body.type.trim() }).returning()
+  const body = await readJson<{ city?: unknown; threshold?: unknown; type?: unknown }>(request)
+  const city = typeof body?.city === 'string' ? body.city.trim() : ''
+  const type = typeof body?.type === 'string' ? body.type.trim() : ''
+  if (!city || city.length > 80 || !['rain', 'temperature', 'wind'].includes(type) || typeof body?.threshold !== 'number' || !Number.isFinite(body.threshold) || Math.abs(body.threshold) > 100000) return NextResponse.json({ error: 'Invalid alert' }, { status: 400 })
+  const [alert] = await db.insert(alerts).values({ id: randomUUID(), userId, city, threshold: String(body.threshold), type }).returning()
   return NextResponse.json(alert, { status: 201 })
 }
 
 export const PATCH = async (request: Request) => {
   const userId = await getUserId()
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const body = await request.json() as { id?: string; active?: boolean }
-  if (!body.id || typeof body.active !== 'boolean') return NextResponse.json({ error: 'Invalid alert' }, { status: 400 })
+  const body = await readJson<{ id?: string; active?: boolean }>(request)
+  if (!body?.id || typeof body.active !== 'boolean') return NextResponse.json({ error: 'Invalid alert' }, { status: 400 })
   const [alert] = await db.update(alerts).set({ active: body.active, updatedAt: new Date() }).where(and(eq(alerts.id, body.id), eq(alerts.userId, userId))).returning()
   return alert ? NextResponse.json(alert) : NextResponse.json({ error: 'Not found' }, { status: 404 })
 }
